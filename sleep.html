@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Sömndagbok</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="sleep.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+
+    <div class="row">
+
+
+        <div class="container-fluid">
+            <div class="titlesection text-center">
+                <h2>Hur har natten varit? Fyll i precis när du klivit upp!</h2>
+                <p>(Börja alltid sömndagboken med att på morgonen fylla i hur Natt 1 har varit. Dagboken är färdig när du fyllt
+                    i allt till och med Dag 7.)</p>
+            </div>
+
+            <form name="sleepdiary" class="text-center">
+                <div class="table-responsive{-sm|-md|-lg|-xl}">
+                    <table class="table table-bordered table-hover table-sm">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col" class="questionsColumn">Första morgonens datum:</th>
+                                <th scope="col">
+                                    <i>Exempel</i>
+                                </th>
+                                <th scope="col">Natt 1</th>
+                                <th scope="col">Natt 2</th>
+                                <th scope="col">Natt 3</th>
+                                <th scope="col">Natt 4</th>
+                                <th scope="col">Natt 5</th>
+                                <th scope="col">Natt 6</th>
+                                <th scope="col">Natt 7</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row">Har du tagit sömn- och/eller annan medicin under natten? Vad? Hur mycket? När?
+                                </th>
+                                <td>
+                                    <textarea rows="3" cols="12" id="col1xrow0" class="example"> 1 Sonata,&#13;&#10; 10mg,&#13;&#10; 23:55</textarea>
+                                </td>
+                                <td>
+                                    <textarea rows="3" cols="12" id="col1xrow1"></textarea>
+                                </td>
+                                <td>
+                                    <textarea rows="3" cols="7" id="col2xrow1"></textarea>
+                                </td>
+                                <td>
+                                    <textarea rows="3" cols="7" id="col3xrow1"></textarea>
+                                </td>
+                                <td>
+                                    <textarea rows="3" cols="7" id="col4xrow1"></textarea>
+                                </td>
+                                <td>
+                                    <textarea rows="3" cols="7" id="col5xrow1"></textarea>
+                                </td>
+                                <td>
+                                    <textarea rows="3" cols="7" id="col6xrow1"></textarea>
+                                </td>
+                                <td>
+                                    <textarea rows="3" cols="7" id="col7xrow1"></textarea>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">När gick du och la dig?</th>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm example" id="col0xrow2" value="22:00">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm" id="bedTimeDay1" name="bedtime" onchange="calculateTotalBedTimeForNight1()">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm" id="bedTimeDay2" name="bedtime" onchange="calculateTotalBedTimeForNight2()">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm" id="bedTimeDay3" name="bedtime" onchange="calculateTotalBedTimeForNight3()">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm" id="bedTimeDay4" name="bedtime" onchange="calculateTotalBedTimeForNight4()">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm" id="bedTimeDay5" name="bedtime" onchange="calculateTotalBedTimeForNight5()">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm" id="bedTimeDay6" name="bedtime" onchange="calculateTotalBedTimeForNight6()">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm" id="bedTimeDay7" name="bedtime" onchange="calculateTotalBedTimeForNight7()">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Vad gjorde du innan du somnade?</th>
+                                <td>
+                                    <input type="text" class="form-control form-control-sm example" id="col0xrow3" value="Läste">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control form-control-sm" id="col1xrow3">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control form-control-sm" id="col2xrow3">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control form-control-sm" id="col3xrow3">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control form-control-sm" id="col4xrow3">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control form-control-sm" id="col5xrow3">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control form-control-sm" id="col6xrow3">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control form-control-sm" id="col7xrow3">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">När började du försöka sova?</th>
+                                <td>
+                                    <input type="text" class="form-control form-control-sm example" id="col0xrow4" value="21:00">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm" id="col1xrow4">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm" id="col2xrow4" name="" onchange="">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm" id="col3xrow4">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm" id="col4xrow4">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm" id="col5xrow4">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm" id="col6xrow4">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm" id="col7xrow4">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Ungefär när somnade du?</th>
+                                <td>
+                                    <input type="text" class="form-control form-control-sm example" id="col0xrow5" value="07:00">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm" id="sleepTimeDay1">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm" id="sleepTimeDay2" name="" onchange="">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm" id="sleepTimeDay3">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm" id="sleepTimeDay4">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm" id="sleepTimeDay5">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm" id="sleepTimeDay6">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm" id="sleepTimeDay7">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Om du vaknat under natten: Skriv ungefär hur många timmar och minuter du var vaken vid varje
+                                    tillfälle
+                                </th>
+
+                                <td>
+                                    <input type="time" class="form-control form-control-sm example" value="01:15">
+                                    <input type="time" class="form-control form-control-sm example" value="00:15">
+                                    <input type="time" class="form-control form-control-sm example" value="00:30">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm">
+                                    <input type="time" class="form-control form-control-sm">
+                                    <input type="time" class="form-control form-control-sm">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm">
+                                    <input type="time" class="form-control form-control-sm">
+                                    <input type="time" class="form-control form-control-sm">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm">
+                                    <input type="time" class="form-control form-control-sm">
+                                    <input type="time" class="form-control form-control-sm">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm">
+                                    <input type="time" class="form-control form-control-sm">
+                                    <input type="time" class="form-control form-control-sm">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm">
+                                    <input type="time" class="form-control form-control-sm">
+                                    <input type="time" class="form-control form-control-sm">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm">
+                                    <input type="time" class="form-control form-control-sm">
+                                    <input type="time" class="form-control form-control-sm">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm">
+                                    <input type="time" class="form-control form-control-sm">
+                                    <input type="time" class="form-control form-control-sm">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">När vaknade du på morgonen?</th>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm example" id="col0xrow7" value="07:00">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm" id="wakeTimeDay1">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm" id="wakeTimeDay2" name="" onchange="">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm" id="wakeTimeDay3">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm" id="wakeTimeDay4">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm" id="wakeTimeDay5">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm" id="wakeTimeDay6">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm" id="wakeTimeDay7">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">När steg du upp på morgonen?</th>
+                                <td>
+                                    <input type="text" class="form-control form-control-sm example" id="col0xrow8" value="07:00">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm" id="upTimeDay1" name="upTime" onchange="calculateTotalBedTimeForNight1()">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm" id="upTimeDay2" name="upTime" onchange="calculateTotalBedTimeForNight2()">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm" id="upTimeDay3" name="upTime" onchange="calculateTotalBedTimeForNight3()">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm" id="upTimeDay4" name="upTime" onchange="calculateTotalBedTimeForNight4()">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm" id="upTimeDay5" name="upTime" onchange="calculateTotalBedTimeForNight5()">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm" id="upTimeDay6" name="upTime" onchange="calculateTotalBedTimeForNight6()">
+                                </td>
+                                <td>
+                                    <input type="time" class="form-control form-control-sm" id="upTimeDay7" name="upTime" onchange="calculateTotalBedTimeForNight7()">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Hur har du sovit?</th>
+                                <td>
+                                    <div class="form-group example">
+                                        <select class="form-control form-control-sm example" id="col0xrow9" name="" onchange="">
+                                            <option>Mycket dåligt</option>
+                                            <option>Ganska dåligt</option>
+                                            <option>Varken bra/dåligt</option>
+                                            <option>Ganska bra</option>
+                                            <option>Mycket bra</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <select class="form-control form-control-sm" id="col1xrow9" name="" onchange="">
+                                            <option>Mycket dåligt</option>
+                                            <option>Ganska dåligt</option>
+                                            <option>Varken bra/dåligt</option>
+                                            <option>Ganska bra</option>
+                                            <option>Mycket bra</option>
+                                        </select>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <div class="form-group">
+                                        <select class="form-control form-control-sm" id="col2xrow9" name="" onchange="">
+                                            <option>Mycket dåligt</option>
+                                            <option>Ganska dåligt</option>
+                                            <option>Varken bra/dåligt</option>
+                                            <option>Ganska bra</option>
+                                            <option>Mycket bra</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <select class="form-control form-control-sm" id="col3xrow9" name="" onchange="">
+                                            <option>Mycket dåligt</option>
+                                            <option>Ganska dåligt</option>
+                                            <option>Varken bra/dåligt</option>
+                                            <option>Ganska bra</option>
+                                            <option>Mycket bra</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <select class="form-control form-control-sm" id="col4xrow9" name="" onchange="">
+                                            <option>Mycket dåligt</option>
+                                            <option>Ganska dåligt</option>
+                                            <option>Varken bra/dåligt</option>
+                                            <option>Ganska bra</option>
+                                            <option>Mycket bra</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <select class="form-control form-control-sm" id="col5xrow9" name="" onchange="">
+                                            <option>Mycket dåligt</option>
+                                            <option>Ganska dåligt</option>
+                                            <option>Varken bra/dåligt</option>
+                                            <option>Ganska bra</option>
+                                            <option>Mycket bra</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <select class="form-control form-control-sm" id="col6xrow9" name="" onchange="">
+                                            <option>Mycket dåligt</option>
+                                            <option>Ganska dåligt</option>
+                                            <option>Varken bra/dåligt</option>
+                                            <option>Ganska bra</option>
+                                            <option>Mycket bra</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="form-group">
+                                        <select class="form-control form-control-sm" id="col7xrow9" name="" onchange="">
+                                            <option>Mycket dåligt</option>
+                                            <option>Ganska dåligt</option>
+                                            <option>Varken bra/dåligt</option>
+                                            <option>Ganska bra</option>
+                                            <option>Mycket bra</option>
+                                        </select>
+                                    </div>
+                                </td>
+                            </tr>
+                            <div class="form-group">
+                                <tr class="table-info">
+                                    <th scope="row">Tid i sängen</th>
+                                    <td class="outputStyle">
+                                        <input type="text" name="" class="inputDailySummary example" value="7tim 30min">
+                                    </td>
+                                    <td class="outputStyle">
+                                        <input type="text" name="outputbedtime" id="outputbedtimeDay1" class="inputDailySummary">
+                                    </td>
+                                    <td class="outputStyle">
+                                        <input type="text" name="outputbedtime" id="outputbedtimeDay2" class="inputDailySummary">
+                                    </td>
+                                    <td class="outputStyle">
+                                        <input type="text" name="outputbedtime" id="outputbedtimeDay3" class="inputDailySummary">
+                                    </td>
+                                    <td class="outputStyle">
+                                        <input type="text" name="outputbedtime" id="outputbedtimeDay4" class="inputDailySummary">
+                                    </td>
+                                    <td class="outputStyle">
+                                        <input type="text" name="outputbedtime" id="outputbedtimeDay5" class="inputDailySummary">
+                                    </td>
+                                    <td class="outputStyle">
+                                        <input type="text" name="outputbedtime" id="outputbedtimeDay6" class="inputDailySummary">
+                                    </td>
+                                    <td class="outputStyle">
+                                        <input type="text" name="outputbedtime" id="outputbedtimeDay7" class="inputDailySummary">
+                                    </td>
+
+                                </tr>
+                                <tr class="table-info">
+                                    <th scope="row">Sömntid</th>
+
+                                </tr>
+                                <tr class="table-info">
+                                    <th scope="row">Sömneffektivitet</th>
+
+                                </tr>
+                            </div>
+                        </tbody>
+                    </table>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Skicka in dagens!</button>
+            </form>
+        </div>
+
+    </div>
+
+    <script type="text/javascript" src="sleep.js"></script>
+</body>
+
+</html>
