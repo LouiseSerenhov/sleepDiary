@@ -52,25 +52,25 @@
                                     <textarea rows="3" cols="12" id="col1xrow0" class="example"> 1 Sonata,&#13;&#10; 10mg,&#13;&#10; 23:55</textarea>
                                 </td>
                                 <td>
-                                    <textarea rows="3" cols="12" id="col1xrow1"></textarea>
+                                    <textarea rows="3" cols="12" id="medicineDay1"></textarea>
                                 </td>
                                 <td>
-                                    <textarea rows="3" cols="7" id="col2xrow1"></textarea>
+                                    <textarea rows="3" cols="7" id="medicineDay2"></textarea>
                                 </td>
                                 <td>
-                                    <textarea rows="3" cols="7" id="col3xrow1"></textarea>
+                                    <textarea rows="3" cols="7" id="medicineDay3"></textarea>
                                 </td>
                                 <td>
-                                    <textarea rows="3" cols="7" id="col4xrow1"></textarea>
+                                    <textarea rows="3" cols="7" id="medicineDay4"></textarea>
                                 </td>
                                 <td>
-                                    <textarea rows="3" cols="7" id="col5xrow1"></textarea>
+                                    <textarea rows="3" cols="7" id="medicineDay5"></textarea>
                                 </td>
                                 <td>
-                                    <textarea rows="3" cols="7" id="col6xrow1"></textarea>
+                                    <textarea rows="3" cols="7" id="medicineDay6"></textarea>
                                 </td>
                                 <td>
-                                    <textarea rows="3" cols="7" id="col7xrow1"></textarea>
+                                    <textarea rows="3" cols="7" id="medicineDay7"></textarea>
                                 </td>
                             </tr>
                             <tr>
@@ -136,7 +136,7 @@
                                     <input type="time" class="form-control form-control-sm" id="col1xrow4">
                                 </td>
                                 <td>
-                                    <input type="time" class="form-control form-control-sm" id="col2xrow4" name="" onchange="">
+                                    <input type="time" class="form-control form-control-sm" id="col2xrow4">
                                 </td>
                                 <td>
                                     <input type="time" class="form-control form-control-sm" id="col3xrow4">
@@ -160,25 +160,25 @@
                                     <input type="text" class="form-control form-control-sm example" id="col0xrow5" value="07:00">
                                 </td>
                                 <td>
-                                    <input type="time" class="form-control form-control-sm" id="sleepTimeDay1">
+                                    <input type="time" class="form-control form-control-sm" id="sleepTimeDay1" onchange="calculateTotalSleepTimeForNight1()">
                                 </td>
                                 <td>
-                                    <input type="time" class="form-control form-control-sm" id="sleepTimeDay2" name="" onchange="">
+                                    <input type="time" class="form-control form-control-sm" id="sleepTimeDay2" onchange="calculateTotalSleepTimeForNight2()">
                                 </td>
                                 <td>
-                                    <input type="time" class="form-control form-control-sm" id="sleepTimeDay3">
+                                    <input type="time" class="form-control form-control-sm" id="sleepTimeDay3" onchange="calculateTotalSleepTimeForNight3()">
                                 </td>
                                 <td>
-                                    <input type="time" class="form-control form-control-sm" id="sleepTimeDay4">
+                                    <input type="time" class="form-control form-control-sm" id="sleepTimeDay4" onchange="calculateTotalSleepTimeForNight4()">
                                 </td>
                                 <td>
-                                    <input type="time" class="form-control form-control-sm" id="sleepTimeDay5">
+                                    <input type="time" class="form-control form-control-sm" id="sleepTimeDay5" onchange="calculateTotalSleepTimeForNight5()">
                                 </td>
                                 <td>
-                                    <input type="time" class="form-control form-control-sm" id="sleepTimeDay6">
+                                    <input type="time" class="form-control form-control-sm" id="sleepTimeDay6" onchange="calculateTotalSleepTimeForNight6()">
                                 </td>
                                 <td>
-                                    <input type="time" class="form-control form-control-sm" id="sleepTimeDay7">
+                                    <input type="time" class="form-control form-control-sm" id="sleepTimeDay7" onchange="calculateTotalSleepTimeForNight7()">
                                 </td>
                             </tr>
                             <tr>
@@ -192,19 +192,19 @@
                                     <input type="time" class="form-control form-control-sm example" value="00:30">
                                 </td>
                                 <td>
-                                    <input type="time" class="form-control form-control-sm">
-                                    <input type="time" class="form-control form-control-sm">
-                                    <input type="time" class="form-control form-control-sm">
+                                    <input type="time" class="form-control form-control-sm" id="1stAwakeAtNight1" onchange="addAwakeTimeAtNight1()">
+                                    <input type="time" class="form-control form-control-sm" id="2ndAwakeAtNight1" onchange="addAwakeTimeAtNight1()">
+                                    <input type="time" class="form-control form-control-sm" id="3rdAwakeAtNight1" onchange="addAwakeTimeAtNight1()">
                                 </td>
                                 <td>
-                                    <input type="time" class="form-control form-control-sm">
-                                    <input type="time" class="form-control form-control-sm">
-                                    <input type="time" class="form-control form-control-sm">
+                                    <input type="time" class="form-control form-control-sm" id="1stAwakeAtNight2" onchange="addAwakeTimeAtNight2()">
+                                    <input type="time" class="form-control form-control-sm" id="2ndAwakeAtNight2" onchange="addAwakeTimeAtNight2()">
+                                    <input type="time" class="form-control form-control-sm" id="3rdAwakeAtNight2" onchange="addAwakeTimeAtNight2()">
                                 </td>
                                 <td>
-                                    <input type="time" class="form-control form-control-sm">
-                                    <input type="time" class="form-control form-control-sm">
-                                    <input type="time" class="form-control form-control-sm">
+                                    <input type="time" class="form-control form-control-sm" id="1stAwakeAtNight3" onchange="addAwakeTimeAtNight3()">
+                                    <input type="time" class="form-control form-control-sm" id="2ndAwakeAtNight3" onchange="addAwakeTimeAtNight3()">
+                                    <input type="time" class="form-control form-control-sm" id="3rdAwakeAtNight3" onchange="addAwakeTimeAtNight3()">
                                 </td>
                                 <td>
                                     <input type="time" class="form-control form-control-sm">
@@ -233,25 +233,25 @@
                                     <input type="time" class="form-control form-control-sm example" id="col0xrow7" value="07:00">
                                 </td>
                                 <td>
-                                    <input type="time" class="form-control form-control-sm" id="wakeTimeDay1">
+                                    <input type="time" class="form-control form-control-sm" id="wakeTimeDay1" onchange="calculateTotalSleepTimeForNight1()">
                                 </td>
                                 <td>
-                                    <input type="time" class="form-control form-control-sm" id="wakeTimeDay2" name="" onchange="">
+                                    <input type="time" class="form-control form-control-sm" id="wakeTimeDay2" name="" onchange="calculateTotalSleepTimeForNight2()">
                                 </td>
                                 <td>
-                                    <input type="time" class="form-control form-control-sm" id="wakeTimeDay3">
+                                    <input type="time" class="form-control form-control-sm" id="wakeTimeDay3" onchange="calculateTotalSleepTimeForNight3()">
                                 </td>
                                 <td>
-                                    <input type="time" class="form-control form-control-sm" id="wakeTimeDay4">
+                                    <input type="time" class="form-control form-control-sm" id="wakeTimeDay4" onchange="calculateTotalSleepTimeForNight4()">
                                 </td>
                                 <td>
-                                    <input type="time" class="form-control form-control-sm" id="wakeTimeDay5">
+                                    <input type="time" class="form-control form-control-sm" id="wakeTimeDay5" onchange="calculateTotalSleepTimeForNight5()">
                                 </td>
                                 <td>
-                                    <input type="time" class="form-control form-control-sm" id="wakeTimeDay6">
+                                    <input type="time" class="form-control form-control-sm" id="wakeTimeDay6" onchange="calculateTotalSleepTimeForNight6()">
                                 </td>
                                 <td>
-                                    <input type="time" class="form-control form-control-sm" id="wakeTimeDay7">
+                                    <input type="time" class="form-control form-control-sm" id="wakeTimeDay7" onchange="calculateTotalSleepTimeForNight7()">
                                 </td>
                             </tr>
                             <tr>
@@ -296,7 +296,7 @@
                                 </td>
                                 <td>
                                     <div class="form-group">
-                                        <select class="form-control form-control-sm" id="col1xrow9" name="" onchange="">
+                                        <select class="form-control form-control-sm" id="sleepQualityDay1" name="" onchange="">
                                             <option>Mycket dåligt</option>
                                             <option>Ganska dåligt</option>
                                             <option>Varken bra/dåligt</option>
@@ -308,7 +308,7 @@
 
                                 <td>
                                     <div class="form-group">
-                                        <select class="form-control form-control-sm" id="col2xrow9" name="" onchange="">
+                                        <select class="form-control form-control-sm" id="sleepQualityDay2" name="" onchange="">
                                             <option>Mycket dåligt</option>
                                             <option>Ganska dåligt</option>
                                             <option>Varken bra/dåligt</option>
@@ -319,7 +319,7 @@
                                 </td>
                                 <td>
                                     <div class="form-group">
-                                        <select class="form-control form-control-sm" id="col3xrow9" name="" onchange="">
+                                        <select class="form-control form-control-sm" id="sleepQualityDay3" name="" onchange="">
                                             <option>Mycket dåligt</option>
                                             <option>Ganska dåligt</option>
                                             <option>Varken bra/dåligt</option>
@@ -330,7 +330,7 @@
                                 </td>
                                 <td>
                                     <div class="form-group">
-                                        <select class="form-control form-control-sm" id="col4xrow9" name="" onchange="">
+                                        <select class="form-control form-control-sm" id="sleepQualityDay4" name="" onchange="">
                                             <option>Mycket dåligt</option>
                                             <option>Ganska dåligt</option>
                                             <option>Varken bra/dåligt</option>
@@ -341,7 +341,7 @@
                                 </td>
                                 <td>
                                     <div class="form-group">
-                                        <select class="form-control form-control-sm" id="col5xrow9" name="" onchange="">
+                                        <select class="form-control form-control-sm" id="sleepQualityDay5" name="" onchange="">
                                             <option>Mycket dåligt</option>
                                             <option>Ganska dåligt</option>
                                             <option>Varken bra/dåligt</option>
@@ -352,7 +352,7 @@
                                 </td>
                                 <td>
                                     <div class="form-group">
-                                        <select class="form-control form-control-sm" id="col6xrow9" name="" onchange="">
+                                        <select class="form-control form-control-sm" id="sleepQualityDay6" name="" onchange="">
                                             <option>Mycket dåligt</option>
                                             <option>Ganska dåligt</option>
                                             <option>Varken bra/dåligt</option>
@@ -363,7 +363,7 @@
                                 </td>
                                 <td>
                                     <div class="form-group">
-                                        <select class="form-control form-control-sm" id="col7xrow9" name="" onchange="">
+                                        <select class="form-control form-control-sm" id="sleepQualityDay7" name="" onchange="">
                                             <option>Mycket dåligt</option>
                                             <option>Ganska dåligt</option>
                                             <option>Varken bra/dåligt</option>
@@ -404,11 +404,57 @@
                                 </tr>
                                 <tr class="table-info">
                                     <th scope="row">Sömntid</th>
-
+                                    <td class="outputStyle">
+                                        <input type="text" name="" class="inputDailySummary example" value="7tim 30min">
+                                    </td>
+                                    <td class="outputStyle">
+                                        <input type="text" name="outputbedtime" id="outputsleeptimeDay1" class="inputDailySummary">
+                                    </td>
+                                    <td class="outputStyle">
+                                        <input type="text" name="outputbedtime" id="outputsleeptimeDay2" class="inputDailySummary">
+                                    </td>
+                                    <td class="outputStyle">
+                                        <input type="text" name="outputbedtime" id="outputsleeptimeDay3" class="inputDailySummary">
+                                    </td>
+                                    <td class="outputStyle">
+                                        <input type="text" name="outputbedtime" id="outputsleeptimeDay4" class="inputDailySummary">
+                                    </td>
+                                    <td class="outputStyle">
+                                        <input type="text" name="outputbedtime" id="outputsleeptimeDay5" class="inputDailySummary">
+                                    </td>
+                                    <td class="outputStyle">
+                                        <input type="text" name="outputbedtime" id="outputsleeptimeDay6" class="inputDailySummary">
+                                    </td>
+                                    <td class="outputStyle">
+                                        <input type="text" name="outputbedtime" id="outputsleeptimeDay7" class="inputDailySummary">
+                                    </td>
                                 </tr>
                                 <tr class="table-info">
                                     <th scope="row">Sömneffektivitet</th>
-
+                                    <td class="outputStyle">
+                                        <input type="text" name="" class="inputDailySummary example" value="7tim 30min">
+                                    </td>
+                                    <td class="outputStyle">
+                                        <input type="text" name="outputbedtime" id="outputsleepEfficacyDay1" class="inputDailySummary">
+                                    </td>
+                                    <td class="outputStyle">
+                                        <input type="text" name="outputbedtime" id="outputsleepEfficacyDay2" class="inputDailySummary">
+                                    </td>
+                                    <td class="outputStyle">
+                                        <input type="text" name="outputbedtime" id="outputsleepEfficacyDay3" class="inputDailySummary">
+                                    </td>
+                                    <td class="outputStyle">
+                                        <input type="text" name="outputbedtime" id="outputsleepEfficacyDay4" class="inputDailySummary">
+                                    </td>
+                                    <td class="outputStyle">
+                                        <input type="text" name="outputbedtime" id="outputsleepEfficacyDay5" class="inputDailySummary">
+                                    </td>
+                                    <td class="outputStyle">
+                                        <input type="text" name="outputbedtime" id="outputsleepEfficacyDay6" class="inputDailySummary">
+                                    </td>
+                                    <td class="outputStyle">
+                                        <input type="text" name="outputbedtime" id="outputsleepEfficacyDay7" class="inputDailySummary">
+                                    </td>
                                 </tr>
                             </div>
                         </tbody>
