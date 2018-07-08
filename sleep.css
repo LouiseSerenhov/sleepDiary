@@ -21,10 +21,24 @@ body {
     min-width: 190px;
 }
 
-.outputStyle {
-    
+.addInputButton {
+    border-radius: 12px;
+    background-color: darkseagreen;
+    color: darkslategray;
+    float: right;
+}
+
+.addInputButton:hover {
+  cursor: pointer;
+  transform: scale(0.8);
 }
 
 .inputDailySummary {
     max-width: 120px;
+}
+
+textarea {
+    border-radius: .2rem;
+    color: 495057;
+    border: 1px solid #ced4da;
 }
