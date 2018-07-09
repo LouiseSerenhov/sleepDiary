@@ -1,4 +1,19 @@
-function calculateTotalBedTimeForNight1  () {
+$(document).ready(function(){
+	$('.example').css('color', '#80808082');
+});
+
+function calculateTotalBedTimeForNight (t) {
+	console.log("kallar på nya funktionen");
+	calculateTotalSleepTimeForNight(t);
+	var bedTime = document.getElementById('bedTimeDay' + t).value;
+	var wakingUpTime = document.getElementById('upTimeDay' + t).value;
+	var totalBedTime = calculateTotalBedTime(bedTime, wakingUpTime);
+	if (totalBedTime) {
+		document.getElementById('outputbedtimeDay' + t).value = totalBedTime;
+	}
+};
+
+/* function calculateTotalBedTimeForNight1  () {
 	calculateTotalSleepTimeForNight1();
 	var bedTime = document.getElementById('bedTimeDay1').value;
 	var wakingUpTime = document.getElementById('upTimeDay1').value;
@@ -6,7 +21,7 @@ function calculateTotalBedTimeForNight1  () {
 	if (totalBedTime) {
 		document.getElementById('outputbedtimeDay1').value = totalBedTime;
 	}
-};
+}; */
 function calculateTotalBedTimeForNight2  () {
 	calculateTotalSleepTimeForNight2();
 	var bedTime = document.getElementById('bedTimeDay2').value;
@@ -64,6 +79,37 @@ function calculateTotalBedTimeForNight7 () {
 	var totalBedTime = calculateTotalBedTime(bedTime, wakingUpTime);
 	if (totalBedTime) {
 		document.getElementById('outputbedtimeDay7').value = totalBedTime;
+	}
+};
+
+function calculateTotalSleepTimeForNight (t) {
+	console.log('Anropar calculateTotalSleepTimeForNight' + t);
+	var bedTime = document.getElementById('bedTimeDay' + t).value;
+	var upTime = document.getElementById('upTimeDay' + t).value;
+	var sleepTime = document.getElementById('sleepTimeDay' + t).value;
+	var wakeTime = document.getElementById('wakeTimeDay' + t).value;
+	var nr1AwakeTimeAtNight = document.getElementById('1stAwakeAtNight' + t).value;
+	var awakeTimeAtNight;
+	console.log(awakeTimeAtNight, 'awakeTimeAtNight just nu');
+	if (nr1AwakeTimeAtNight) {
+		awakeTimeAtNight = addAwakeTimeAtNight(t);
+	}
+	var totalSleepHours;
+	var totalSleepMin;
+	var totalSleepTime;
+	var totalBedTimeMin = calculateTimeDiffMin(bedTime, upTime);
+	console.log(totalBedTimeMin, 'totalbedtimemin');
+	var totalSleepTimeMin = calculateTotalSleepTimeMin(bedTime, upTime, sleepTime, wakeTime, awakeTimeAtNight);
+	console.log(totalSleepTimeMin, 'totalsleeptimemin');
+	var sleepEfficacy = Math.round((totalSleepTimeMin / totalBedTimeMin) * 100);
+	console.log(sleepEfficacy, 'sleepEfficacy');
+	if (totalSleepTimeMin) {
+		console.log('snart output!');
+		totalSleepMin = totalSleepTimeMin % 60;
+		totalSleepHours = (totalSleepTimeMin - totalSleepMin) / 60;
+		totalSleepTime = totalSleepHours + ' tim ' + totalSleepMin + ' min';
+		document.getElementById('outputsleeptimeDay' + t).value = totalSleepTime;
+		document.getElementById('outputsleepEfficacyDay' + t).value = sleepEfficacy + '%';
 	}
 };
 
@@ -256,12 +302,12 @@ function calculateTotalSleepTimeForNight7 () {
 	}
 };
 
-function addAwakeTimeAtNight1 () {
-	console.log('kör AwakeTimeAtNight1');
+function addAwakeTimeAtNight (t) {
+	console.log('kör AwakeTimeAtNight' + t);
 	var awakeHours = 0;
 	var awakeMin = 0;
 	var awakeTotalMin = 0;
-	var awakeTimeAtNightList = document.querySelectorAll('#awakeTimeAtNight #night1 .addInputContainer input');
+	var awakeTimeAtNightList = document.querySelectorAll('#awakeTimeAtNight #night' + t + ' .addInputContainer input');
 	awakeTimeAtNightList.forEach(function(input) {
 		awakeHours = awakeHours + separateHours(input.value);
 		awakeMin = awakeMin + separateMin(input.value);
@@ -367,7 +413,7 @@ function calculateTotalBedTime (bedTime, upTime) {
 	return calculateTimeBetweenTime(bedTime, upTime);
 };
 
-//Saknar alla de ggr man vaknat under natten!!
+
 function calculateTotalSleepTimeMin (bedTime, upTime, sleepTime, wakeTime, wakeInMiddleOfNightMin) {
 	console.log('Anropar calculateTotalSleepTimeMin');
 	console.log(bedTime);

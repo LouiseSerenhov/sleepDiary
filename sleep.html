@@ -16,8 +16,6 @@
 
 
     <div class="row">
-
-
         <div class="container-fluid">
             <div class="titlesection text-center">
                 <h2>Hur har natten varit? Fyll i precis när du klivit upp!</h2>
@@ -108,7 +106,7 @@
                                     <input type="time" class="form-control form-control-sm example" id="col0xrow2" value="22:00" disabled>
                                 </td>
                                 <td>
-                                    <input type="time" class="form-control form-control-sm" id="bedTimeDay1" name="bedtime" onchange="calculateTotalBedTimeForNight1()">
+                                    <input type="time" class="form-control form-control-sm" id="bedTimeDay1" name="bedtime" onchange="calculateTotalBedTimeForNight(1)">
                                 </td>
                                 <td>
                                     <input type="time" class="form-control form-control-sm" id="bedTimeDay2" name="bedtime" onchange="calculateTotalBedTimeForNight2()">
@@ -189,7 +187,7 @@
                                     <input type="text" class="form-control form-control-sm example" id="col0xrow5" value="07:00" disabled>
                                 </td>
                                 <td>
-                                    <input type="time" class="form-control form-control-sm" id="sleepTimeDay1" onchange="calculateTotalSleepTimeForNight1()">
+                                    <input type="time" class="form-control form-control-sm" id="sleepTimeDay1" onchange="calculateTotalSleepTimeForNight(1)">
                                 </td>
                                 <td>
                                     <input type="time" class="form-control form-control-sm" id="sleepTimeDay2" onchange="calculateTotalSleepTimeForNight2()">
@@ -225,7 +223,7 @@
                                 </td>
                                 <td id="night1">
                                     <div class="addInputContainer">
-                                        <input type="time" class="form-control form-control-sm" id="1stAwakeAtNight1" onchange="calculateTotalSleepTimeForNight1()">
+                                        <input type="time" class="form-control form-control-sm" id="1stAwakeAtNight1" onchange="calculateTotalSleepTimeForNight(1)">
                                     </div>
                                     <input type="button" class="addInputButton" onclick="addInputfield(0);" value="+" />
                                 </td>
@@ -272,7 +270,7 @@
                                     <input type="time" class="form-control form-control-sm example" id="col0xrow7" value="07:00" disabled>
                                 </td>
                                 <td>
-                                    <input type="time" class="form-control form-control-sm" id="wakeTimeDay1" onchange="calculateTotalSleepTimeForNight1()">
+                                    <input type="time" class="form-control form-control-sm" id="wakeTimeDay1" onchange="calculateTotalSleepTimeForNight(1)">
                                 </td>
                                 <td>
                                     <input type="time" class="form-control form-control-sm" id="wakeTimeDay2" name="" onchange="calculateTotalSleepTimeForNight2()">
@@ -299,10 +297,10 @@
                                     <input type="text" class="form-control form-control-sm example" id="col0xrow8" value="07:30" disabled>
                                 </td>
                                 <td>
-                                    <input type="time" class="form-control form-control-sm" id="upTimeDay1" name="upTime" onchange="calculateTotalBedTimeForNight1()">
+                                    <input type="time" class="form-control form-control-sm" id="upTimeDay1" name="upTime" onchange="calculateTotalBedTimeForNight(1)">
                                 </td>
                                 <td>
-                                    <input type="time" class="form-control form-control-sm" id="upTimeDay2" name="upTime" onchange="calculateTotalBedTimeForNight2()">
+                                    <input type="time" class="form-control form-control-sm" id="upTimeDay2" name="upTime" onchange="calculateTotalBedTimeForNight(2)">
                                 </td>
                                 <td>
                                     <input type="time" class="form-control form-control-sm" id="upTimeDay3" name="upTime" onchange="calculateTotalBedTimeForNight3()">
