@@ -1,17 +1,17 @@
-body {
+/* body {
     font-size: 92% !important;
-}
+} */
 
-.container-fluid {
+/* .container-fluid {
     width: 90% !important;
-}
+} */
 
-.titlesection {
+/* .titlesection {
     padding-top: 50px;
     padding-bottom: 50px;
     padding-left: 70px;
     padding-right: 70px;
-}
+} */
 
 /*
 .example {
@@ -19,25 +19,25 @@ body {
 }
 */
 
-.questionsColumn {
+/* .questionsColumn {
     min-width: 190px;
-}
+} */
 
-.addInputButton {
+/* .addInputButton {
     border-radius: 12px;
     background-color: darkseagreen;
     color: darkslategray;
     float: right;
-}
+} */
 
-.addInputButton:hover {
+/* .addInputButton:hover {
   cursor: pointer;
   transform: scale(0.8);
-}
+} */
 
-.inputDailySummary {
+/* .inputDailySummary {
     max-width: 120px;
-}
+} */
 
 textarea {
     border-radius: .2rem;
