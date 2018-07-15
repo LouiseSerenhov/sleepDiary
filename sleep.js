@@ -1,20 +1,38 @@
-$(document).ready(function(){
+$(document).ready(function() {
 	$('.example').css('color', '#80808082');
-	$(".container-fluid").css("width","90%");
-	$("body").css("font-size", "92%");
-	$(".titlesection").css({"padding-top": "50px", "padding-bottom": "50px", "padding-left": "70px", "padding-right": "70px"});
-	$(".questionsColumn").css("min-width", "190px");
-	$(".addInputButton").css({"border-radius": "12px", "background-color": "darkseagreen", "color": "darkslategray", "float": "left"});
-	$(".inputDailySummary").css("max-width", "120px");
-	$("textarea").css({"border-radius": "120px"});
-	$("addInput").hover(function(){
-		$(".addInputButton:hover").css("background-color", "yellow");
-		
+	$('.container-fluid').css('width', '90%');
+	$('body').css('font-size', '92%');
+	$('.titlesection').css({
+		'padding-top': '50px',
+		'padding-bottom': '50px',
+		'padding-left': '70px',
+		'padding-right': '70px',
 	});
+	$('.questionsColumn').css('min-width', '190px');
+	$('.addInputButton').css({
+		'border-radius': '12px',
+		'background-color': 'darkseagreen',
+		color: 'darkslategray',
+		float: 'left'
+	});
+	$('.inputDailySummary').css('max-width', '120px');
+	$('textarea').css({
+		'border-radius': '.2rem',
+		color: '495057',
+		border: '1px solid #ced4da',
+	});
+
+	$('.addInputButton').hover(function() {
+		$(this).css({
+			'cursor': 'pointer',
+			
+		});
+	});
+
 });
 
-function calculateTotalBedTimeForNight (t) {
-	console.log("kallar på nya funktionen calculateTotalBEdTimeForNigth" + t);
+function calculateTotalBedTimeForNight(t) {
+	console.log('kallar på nya funktionen calculateTotalBEdTimeForNigth' + t);
 	calculateTotalSleepTimeForNight(t);
 	var bedTime = document.getElementById('bedTimeDay' + t).value;
 	var wakingUpTime = document.getElementById('upTimeDay' + t).value;
@@ -22,9 +40,9 @@ function calculateTotalBedTimeForNight (t) {
 	if (totalBedTime) {
 		document.getElementById('outputbedtimeDay' + t).value = totalBedTime;
 	}
-};
+}
 
-function calculateTotalSleepTimeForNight (t) {
+function calculateTotalSleepTimeForNight(t) {
 	console.log('Anropar nya funktionen calculateTotalSleepTimeForNight' + t);
 	var bedTime = document.getElementById('bedTimeDay' + t).value;
 	var upTime = document.getElementById('upTimeDay' + t).value;
@@ -53,10 +71,9 @@ function calculateTotalSleepTimeForNight (t) {
 		document.getElementById('outputsleeptimeDay' + t).value = totalSleepTime;
 		document.getElementById('outputsleepEfficacyDay' + t).value = sleepEfficacy + '%';
 	}
-};
+}
 
-
-function addAwakeTimeAtNight (t) {
+function addAwakeTimeAtNight(t) {
 	console.log('kör AwakeTimeAtNight' + t);
 	var awakeHours = 0;
 	var awakeMin = 0;
@@ -68,21 +85,19 @@ function addAwakeTimeAtNight (t) {
 	});
 	awakeTotalMin = awakeHours * 60 + awakeMin;
 	return awakeTotalMin;
-};
-
+}
 
 //Utilityfunktioner!
 
-function calculateTotalBedTime (bedTime, upTime) {
+function calculateTotalBedTime(bedTime, upTime) {
 	if (!bedTime || !upTime) {
 		console.log('saknar något svar för att räkna ut');
 		return;
 	}
 	return calculateTimeBetweenTime(bedTime, upTime);
-};
+}
 
-
-function calculateTotalSleepTimeMin (bedTime, upTime, sleepTime, wakeTime, wakeInMiddleOfNightMin) {
+function calculateTotalSleepTimeMin(bedTime, upTime, sleepTime, wakeTime, wakeInMiddleOfNightMin) {
 	console.log('Anropar calculateTotalSleepTimeMin');
 	console.log(bedTime);
 	console.log(upTime);
@@ -106,9 +121,9 @@ function calculateTotalSleepTimeMin (bedTime, upTime, sleepTime, wakeTime, wakeI
 		totalSleepTimeMin = totalSleepTimeMin - wakeInMiddleOfNightMin;
 	}
 	return totalSleepTimeMin;
-};
+}
 
-function calculateTimeDiffMin (time1, time2) {
+function calculateTimeDiffMin(time1, time2) {
 	console.log('Anropar calculateTimeDiffMin');
 	console.log(time1, time2, 'tiderna i calculateTimediffMin');
 	var time1Hours = separateHours(time1);
@@ -138,9 +153,9 @@ function calculateTimeDiffMin (time1, time2) {
 	totalDiffTime = totalDiffHours * 60 + totalDiffMin;
 	console.log(totalDiffTime, 'TotalDiffTimeMin skickas tillbaks');
 	return totalDiffTime;
-};
+}
 
-function calculateTimeBetweenTime (time1, time2) {
+function calculateTimeBetweenTime(time1, time2) {
 	var time1Hours = separateHours(time1);
 	var time1Min = separateMin(time1);
 	var time2Hours = separateHours(time2);
@@ -164,27 +179,27 @@ function calculateTimeBetweenTime (time1, time2) {
 	totalDiffTime = totalDiffHours + 'tim ' + totalDiffMin + 'min';
 	console.log(totalDiffTime);
 	return totalDiffTime;
-};
+}
 
-function calculateSleepEfficacy (sleepTimeMin, timeInBedMin) {
+function calculateSleepEfficacy(sleepTimeMin, timeInBedMin) {
 	return sleepTimeMin / timeInBedMin;
-};
+}
 
-function separateHours (time) {
+function separateHours(time) {
 	if (!time) {
 		return 0;
 	}
 	var timeHours = parseInt(time.split(':')[0]);
 	return timeHours;
-};
+}
 
-function separateMin (time) {
+function separateMin(time) {
 	if (!time) {
 		return 0;
 	}
 	var timeMin = parseInt(time.split(':')[1]);
 	return timeMin;
-};
+}
 
 function addInputfield(nr) {
 	console.log('kör addInputFiled', nr);
@@ -192,12 +207,19 @@ function addInputfield(nr) {
 	var inputElement = document.createElement('input');
 	inputElement.setAttribute('type', 'time');
 	inputElement.className = 'form-control form-control-sm';
-	inputElement.addEventListener('change', getFunctionNameForSleepAtNight(nr), false);
+	inputElement.addEventListener(
+		'change',
+		function() {
+			getFunctionNameForSleepAtNight(nr);
+		},
+		false
+	);
+
 	currentInputContainer[nr].appendChild(inputElement);
 }
 
 function getFunctionNameForSleepAtNight(night) {
-	console.log("Eventlistener grejjen anropas!");
+	console.log('Eventlistener grejjen anropas!');
 	switch (night) {
 		case 6:
 			return calculateTotalSleepTimeForNight(night + 1);
