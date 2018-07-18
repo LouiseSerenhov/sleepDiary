@@ -13,7 +13,7 @@ $(document).ready(function() {
 		'border-radius': '12px',
 		'background-color': 'darkseagreen',
 		color: 'darkslategray',
-		float: 'left'
+		float: 'left',
 	});
 	$('.inputDailySummary').css('max-width', '120px');
 	$('textarea').css({
@@ -24,42 +24,59 @@ $(document).ready(function() {
 
 	$('.addInputButton').hover(function() {
 		$(this).css({
-			'cursor': 'pointer',
-			
+			cursor: 'pointer',
 		});
 	});
-
 });
 
-function calculateTotalBedTimeForNight(t) {
-	console.log('kallar på nya funktionen calculateTotalBEdTimeForNigth' + t);
-	calculateTotalSleepTimeForNight(t);
-	var bedTime = document.getElementById('bedTimeDay' + t).value;
-	var wakingUpTime = document.getElementById('upTimeDay' + t).value;
+function calculateTotalBedTimeForNight(nightNr) {
+	console.log('kallar på nya funktionen calculateTotalBEdTimeForNigth' + nightNr);
+	calculateTotalSleepTimeForNight(nightNr);
+	var bedTime = document.getElementById('bedTimeDay' + nightNr).value;
+	var wakingUpTime = document.getElementById('upTimeDay' + nightNr).value;
 	var totalBedTime = calculateTotalBedTime(bedTime, wakingUpTime);
 	if (totalBedTime) {
-		document.getElementById('outputbedtimeDay' + t).value = totalBedTime;
+		document.getElementById('outputbedtimeDay' + nightNr).value = totalBedTime;
 	}
 }
 
-function calculateTotalSleepTimeForNight(t) {
-	console.log('Anropar nya funktionen calculateTotalSleepTimeForNight' + t);
-	var bedTime = document.getElementById('bedTimeDay' + t).value;
-	var upTime = document.getElementById('upTimeDay' + t).value;
-	var sleepTime = document.getElementById('sleepTimeDay' + t).value;
-	var wakeTime = document.getElementById('wakeTimeDay' + t).value;
-	var nr1AwakeTimeAtNight = document.getElementById('1stAwakeAtNight' + t).value;
+function calculateTotalSleepTimeForNight(nightNr) {
+	console.log('Anropar nya funktionen calculateTotalSleepTimeForNight' + nightNr);
+	var bedTime = document.getElementById('bedTimeDay' + nightNr).value;
+	var upTime = document.getElementById('upTimeDay' + nightNr).value;
+	var sleepTime = document.getElementById('sleepTimeDay' + nightNr).value;
+	var wakeTime = document.getElementById('wakeTimeDay' + nightNr).value;
+	var nr1AwakeTimeAtNight = document.getElementById('1stAwakeAtNight' + nightNr).value;
 	var awakeTimeAtNight;
 	console.log(awakeTimeAtNight, 'awakeTimeAtNight just nu');
 	if (nr1AwakeTimeAtNight) {
-		awakeTimeAtNight = addAwakeTimeAtNight(t);
+		awakeTimeAtNight = addAwakeTimeAtNight(nightNr);
 	}
 	var totalSleepHours;
 	var totalSleepMin;
 	var totalSleepTime;
 	var totalBedTimeMin = calculateTimeDiffMin(bedTime, upTime);
+
+	//LITE FELMEDDELANDEN (GÖR EGEN DUNKTION AV DETTA!)
+	// Om totalBedTimeMin är mer än 22h --> ej timligt. För mkt tid i sängen.
+	if (totalBedTimeMin > 1320) {
+		alert("Du har skrivit att du varit i sängen mer än 22h. Det låter inte rimligt. Dubbelkolla att det stämmer!");
+	};
 	console.log(totalBedTimeMin, 'totalbedtimemin');
 	var totalSleepTimeMin = calculateTotalSleepTimeMin(bedTime, upTime, sleepTime, wakeTime, awakeTimeAtNight);
+	//Om totalSleepTimeMin är mer än 1320 min --> meddelande om att det ej är rimligt. Har sovit föt mkt.
+	if (totalSleepTimeMin > 1320) {
+		alert("Du har skrivit att du sovit mer än 22h. Det låter inte rimligt. Dubbelkolla att det stämmer!");
+	};
+	//Om totalBedTimeMin är mindre än TotalsleepTimeMin --> något stämmer inte
+	if (totalBedTimeMin < totalSleepTimeMin){
+		alert("Du har skrivit att du sovit mer än du varit i sängen. Detta låter inte rimligt. Dubbelkolla att det stämmer!");
+	};
+	//Om skillnad mellan bedTimeMin och sleepTimeMin är mer än 900min --> ge meddelande om att det ej är rimligt
+	if (totalBedTimeMin - totalSleepTimeMin > 900) {
+		alert("Du har skrivit att du varit i sängen utan att sova i mer än 15 timmar. Detta låter inte rimligt. Dubbelkolla att det stämmer!")
+	}
+	
 	console.log(totalSleepTimeMin, 'totalsleeptimemin');
 	var sleepEfficacy = Math.round((totalSleepTimeMin / totalBedTimeMin) * 100);
 	console.log(sleepEfficacy, 'sleepEfficacy');
@@ -68,17 +85,19 @@ function calculateTotalSleepTimeForNight(t) {
 		totalSleepMin = totalSleepTimeMin % 60;
 		totalSleepHours = (totalSleepTimeMin - totalSleepMin) / 60;
 		totalSleepTime = totalSleepHours + ' tim ' + totalSleepMin + ' min';
-		document.getElementById('outputsleeptimeDay' + t).value = totalSleepTime;
-		document.getElementById('outputsleepEfficacyDay' + t).value = sleepEfficacy + '%';
+		document.getElementById('outputsleeptimeDay' + nightNr).value = totalSleepTime;
+		document.getElementById('outputsleepEfficacyDay' + nightNr).value = sleepEfficacy + '%';
 	}
 }
 
-function addAwakeTimeAtNight(t) {
-	console.log('kör AwakeTimeAtNight' + t);
+function addAwakeTimeAtNight(nightNr) {
+	console.log('kör AwakeTimeAtNight' + nightNr);
 	var awakeHours = 0;
 	var awakeMin = 0;
 	var awakeTotalMin = 0;
-	var awakeTimeAtNightList = document.querySelectorAll('#awakeTimeAtNight #night' + t + ' .addInputContainer input');
+	var awakeTimeAtNightList = document.querySelectorAll(
+		'#awakeTimeAtNight #night' + nightNr + ' .addInputContainer input'
+	);
 	awakeTimeAtNightList.forEach(function(input) {
 		awakeHours = awakeHours + separateHours(input.value);
 		awakeMin = awakeMin + separateMin(input.value);
