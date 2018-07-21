@@ -56,27 +56,9 @@ function calculateTotalSleepTimeForNight(nightNr) {
 	var totalSleepMin;
 	var totalSleepTime;
 	var totalBedTimeMin = calculateTimeDiffMin(bedTime, upTime);
-
-	//LITE FELMEDDELANDEN (GÖR EGEN DUNKTION AV DETTA!)
-	// Om totalBedTimeMin är mer än 22h --> ej timligt. För mkt tid i sängen.
-	if (totalBedTimeMin > 1320) {
-		alert("Du har skrivit att du varit i sängen mer än 22h. Det låter inte rimligt. Dubbelkolla att det stämmer!");
-	};
 	console.log(totalBedTimeMin, 'totalbedtimemin');
 	var totalSleepTimeMin = calculateTotalSleepTimeMin(bedTime, upTime, sleepTime, wakeTime, awakeTimeAtNight);
-	//Om totalSleepTimeMin är mer än 1320 min --> meddelande om att det ej är rimligt. Har sovit föt mkt.
-	if (totalSleepTimeMin > 1320) {
-		alert("Du har skrivit att du sovit mer än 22h. Det låter inte rimligt. Dubbelkolla att det stämmer!");
-	};
-	//Om totalBedTimeMin är mindre än TotalsleepTimeMin --> något stämmer inte
-	if (totalBedTimeMin < totalSleepTimeMin){
-		alert("Du har skrivit att du sovit mer än du varit i sängen. Detta låter inte rimligt. Dubbelkolla att det stämmer!");
-	};
-	//Om skillnad mellan bedTimeMin och sleepTimeMin är mer än 900min --> ge meddelande om att det ej är rimligt
-	if (totalBedTimeMin - totalSleepTimeMin > 900) {
-		alert("Du har skrivit att du varit i sängen utan att sova i mer än 15 timmar. Detta låter inte rimligt. Dubbelkolla att det stämmer!")
-	}
-	
+
 	console.log(totalSleepTimeMin, 'totalsleeptimemin');
 	var sleepEfficacy = Math.round((totalSleepTimeMin / totalBedTimeMin) * 100);
 	console.log(sleepEfficacy, 'sleepEfficacy');
@@ -85,6 +67,35 @@ function calculateTotalSleepTimeForNight(nightNr) {
 		totalSleepMin = totalSleepTimeMin % 60;
 		totalSleepHours = (totalSleepTimeMin - totalSleepMin) / 60;
 		totalSleepTime = totalSleepHours + ' tim ' + totalSleepMin + ' min';
+
+		//FELMEDDELANDEN, SKAPA EGEN FUNKTION AV DESSA
+		// Om totalBedTimeMin är mer än 22h --> ej timligt. För mkt tid i sängen.
+		if (totalBedTimeMin > 1320) {
+			alert(
+				'Du har skrivit att du varit i sängen mer än 22h. Det låter inte rimligt. Dubbelkolla att det stämmer!'
+			);
+		} else 
+		//Om totalSleepTimeMin är mer än 1320 min --> meddelande om att det ej är rimligt. Har sovit föt mkt.
+		if (totalSleepTimeMin > 1320) {
+			alert('Du har skrivit att du sovit mer än 22h. Det låter inte rimligt. Dubbelkolla att det stämmer!');
+		} else
+		//Om totalBedTimeMin är mindre än TotalsleepTimeMin --> något stämmer inte
+		if (totalBedTimeMin < totalSleepTimeMin) {
+			alert(
+				'Du har skrivit att du sovit mer än du varit i sängen. Detta låter inte rimligt. Dubbelkolla att det stämmer!'
+			);
+		} else 
+		//Om skillnad mellan bedTimeMin och sleepTimeMin är mer än 900min --> ge meddelande om att det ej är rimligt
+		var inBedWithoutSleepingMin = totalBedTimeMin - totalSleepTimeMin;
+		if (inBedWithoutSleepingMin > 900) {
+			alert(
+				'Du har skrivit att du varit i sängen utan att sova mer än 15 timmar. Detta låter inte rimligt. Dubbelkolla att det stämmer!'
+			);
+		} else {
+
+		//document.getElementById('outputsleeptimeDay' + nightNr).value = totalSleepTime;
+		//document.getElementById('outputsleepEfficacyDay' + nightNr).value = sleepEfficacy + '%';
+		}
 		document.getElementById('outputsleeptimeDay' + nightNr).value = totalSleepTime;
 		document.getElementById('outputsleepEfficacyDay' + nightNr).value = sleepEfficacy + '%';
 	}
