@@ -1,6 +1,6 @@
 //CSS via jQuery eftersom det inte fungerar via vanlig CSS fil just nu 
 $(document).ready(function () {
-	$('.example').css('color', '#80808082');
+	$('.example').css('color', '#737373');
 	$('.container-fluid').css('width', '90%');
 	$('body').css('font-size', '92%');
 	$('.titlesection').css({
