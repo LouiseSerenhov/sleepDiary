@@ -1,3 +1,4 @@
+//CSS via jQuery eftersom det inte fungerar via vanlig CSS fil just nu 
 $(document).ready(function () {
 	$('.example').css('color', '#80808082');
 	$('.container-fluid').css('width', '90%');
@@ -29,12 +30,15 @@ $(document).ready(function () {
 	});
 });
 
+
+//JAVASCRIPT KODEN 
+
 function calculateTotalBedTimeForNight(nightNr) {
 	console.log('kallar på nya funktionen calculateTotalBEdTimeForNigth' + nightNr);
-	calculateTotalSleepTimeForNight(nightNr);
 	var bedTime = document.getElementById('bedTimeDay' + nightNr).value;
 	var wakingUpTime = document.getElementById('upTimeDay' + nightNr).value;
 	var totalBedTime = calculateTotalBedTime(bedTime, wakingUpTime);
+	calculateTotalSleepTimeForNight(nightNr);
 	if (totalBedTime) {
 		document.getElementById('outputbedtimeDay' + nightNr).value = totalBedTime;
 	}
@@ -55,6 +59,7 @@ function calculateTotalSleepTimeForNight(nightNr) {
 	var totalSleepHours;
 	var totalSleepMin;
 	var totalSleepTime;
+	var totalBedTime = calculateTotalBedTime(bedTime, upTime);
 	var totalBedTimeMin = calculateTimeDiffMin(bedTime, upTime);
 	console.log(totalBedTimeMin, 'totalbedtimemin');
 	var totalSleepTimeMin = calculateTotalSleepTimeMin(bedTime, upTime, sleepTime, wakeTime, awakeTimeAtNight);
@@ -66,15 +71,12 @@ function calculateTotalSleepTimeForNight(nightNr) {
 		console.log('snart output!');
 		totalSleepMin = totalSleepTimeMin % 60;
 		totalSleepHours = (totalSleepTimeMin - totalSleepMin) / 60;
-		totalSleepTime = totalSleepHours + ' tim ' + totalSleepMin + ' min';
-
-
-		var inBedWithoutSleepingMin = totalBedTimeMin - totalSleepTimeMin;
-		checkingValidation(totalBedTimeMin, totalSleepTime, totalSleepTimeMin, sleepEfficacy, document.getElementById('bedTimeDay' + nightNr), nightNr);
+		totalSleepTime = totalSleepHours + 'tim ' + totalSleepMin + 'min';
+		checkingValidation(totalBedTimeMin, totalSleepTime, totalSleepTimeMin, sleepEfficacy, nightNr, totalBedTime);
 	}
 }
 
-function checkingValidation(totalBedTimeMin, totalSleepTime, totalSleepTimeMin, sleepEfficacy, input, nightNr) {
+function checkingValidation(totalBedTimeMin, totalSleepTime, totalSleepTimeMin, sleepEfficacy, nightNr, totalBedTime) {
 	console.log("anropar CheckingValidity funktionen!");
 	// skapa ett nytt datum 
 	var bedTime = new Date();
@@ -86,86 +88,17 @@ function checkingValidation(totalBedTimeMin, totalSleepTime, totalSleepTimeMin, 
 	// lägg till 22h timmar från tiden från "När gick du och la dig"
 	bedTime.setHours(+hours + 23);
 
-	// Gör om så att det inte blir fel när det endast är en siffra. Borde göra om till egen funktion
 	var maxMin = bedTime.getMinutes();
 	var maxHours = bedTime.getHours();
-
-	if (maxMin == "0") {
-		maxMin = "00";
-	} else if (maxMin == "1") {
-		maxMin = "10";
-	} else if (maxMin == "2") {
-		maxMin = "20";
-	} else if (maxMin == "3") {
-		maxMin = "30";
-	} else if (maxMin == "4") {
-		maxMin = "40";
-	} else if (maxMin == "5") {
-		maxMin = "50";
-	}
-	if (maxHours == "0") {
-		maxHours = "00";
-	} else 	if (maxHours == "1") {
-		maxHours = "01";
-	} else 	if (maxHours == "2") {
-		maxHours = "02";
-	} else 	if (maxHours == "3") {
-		maxHours = "03";
-	} else 	if (maxHours == "4") {
-		maxHours = "04";
-	} else 	if (maxHours == "5") {
-		maxHours = "05";
-	} else 	if (maxHours == "6") {
-		maxHours = "06";
-	} else 	if (maxHours == "7") {
-		maxHours = "07";
-	} else 	if (maxHours == "8") {
-		maxHours = "08";
-	} else 	if (maxHours == "9") {
-		maxHours = "09";
-	} 
-	var maxValue = maxHours + ":" + maxMin;
+	// Gör om så att det inte blir fel när det endast är en siffra. 
+    var maxValue = fixSyntaxMaxValue(maxMin, maxHours);
 
 	var minHours = separateHours($('#wakeTimeDay' + nightNr)[0].value);
 	var minMin = separateMin($('#wakeTimeDay' + nightNr)[0].value);
-	if (minMin == "0") {
-		minMin = "00";
-	} else if (minMin == "1") {
-		minMin = "10";
-	} else if (minMin == "2") {
-		minMin = "20";
-	} else if (minMin == "3") {
-		minMin = "30";
-	} else if (minMin == "4") {
-		minMin = "40";
-	} else if (minMin == "5") {
-		minMin = "50";
-	}
-	if (minHours == "0") {
-		minHours = "00";
-	} else if (minHours == "1") {
-		minHours = "01";
-	} else if (minHours == "2") {
-		minHours = "02";
-	} else if (minHours == "3") {
-		minHours = "03";
-	} else if (minHours == "4") {
-		minHours = "04";
-	} else if (minHours == "5") {
-		minHours = "05";
-	} else if (minHours == "6") {
-		minHours = "06";
-	} else if (minHours == "7") {
-		minHours = "07";
-	} else if (minHours == "8") {
-		minHours = "08";
-	} else if (minHours == "9") {
-		minHours = "09";
-	} 
-	var minValue = minHours + ":" + minMin;
-	$("#upTimeDay" + nightNr).attr({ "min": minValue, "max": maxValue});
+	// Gör om så att det inte blir fel när det endast är en siffra. 
+	var minValue = fixSyntaxMinValue(minMin, minHours);
 
-
+	$("#upTimeDay" + nightNr).attr({ "min": minValue, "max": maxValue });
 
 	// Om totalBedTimeMin är mer än 22h --> ej rimligt. För mkt tid i sängen.
 	if (totalBedTimeMin > 1320) {
@@ -192,15 +125,12 @@ function checkingValidation(totalBedTimeMin, totalSleepTime, totalSleepTimeMin, 
 		$("#errorTimeDay" + nightNr).hide();
 		document.getElementById('outputsleeptimeDay' + nightNr).value = totalSleepTime;
 		document.getElementById('outputsleepEfficacyDay' + nightNr).value = sleepEfficacy + '%';
+		document.getElementById('outputbedtimeDay' + nightNr).value = totalBedTime;
 	}
 
 
 
-	// if (totalBedTimeMin < totalSleepTimeMin) {
-	// 	alert(
-	// 		'Du har skrivit att du sovit mer än du varit i sängen. Detta låter inte rimligt. Dubbelkolla att det stämmer!'
-	// 	);
-	// } else 
+
 	// //Om skillnad mellan bedTimeMin och sleepTimeMin är mer än 900min --> ge meddelande om att det ej är rimligt
 	// var inBedWithoutSleepingMin = totalBedTimeMin - totalSleepTimeMin;
 	// if (inBedWithoutSleepingMin > 900) {
@@ -245,18 +175,12 @@ function calculateTotalSleepTimeMin(bedTime, upTime, sleepTime, wakeTime, wakeIn
 	console.log(wakeTime);
 
 	if (!bedTime || !upTime || !sleepTime || !wakeTime) {
-		console.log('saknar något svar för att räkna ut');
+		console.log('saknar något svar för att räkna ut totalSleepTimeMin');
 		return;
 	}
-	var totalBedTimeMin = calculateTimeDiffMin(bedTime, upTime);
-	console.log(totalBedTimeMin, 'totalBEdTimeMIn i funk');
-	var inBedWithoutSleepingNight = calculateTimeDiffMin(bedTime, sleepTime);
-	console.log(inBedWithoutSleepingNight, 'inBedWithoutSleepingNight');
-	var inBedWithoutSleepingMorning = calculateTimeDiffMin(wakeTime, upTime);
-	console.log(inBedWithoutSleepingMorning, 'inBedWithoutSleepingMorning');
-	var totalInBedWithoutSleepingMin = inBedWithoutSleepingMorning + inBedWithoutSleepingNight;
-	console.log(totalInBedWithoutSleepingMin, 'inbedwithoutsleeping!');
-	var totalSleepTimeMin = totalBedTimeMin - totalInBedWithoutSleepingMin;
+
+	var totalSleepTimeMin = calculateTimeDiffMin(sleepTime, wakeTime);
+
 	if (wakeInMiddleOfNightMin) {
 		totalSleepTimeMin = totalSleepTimeMin - wakeInMiddleOfNightMin;
 	}
@@ -357,6 +281,85 @@ function addInputfield(nr) {
 
 	currentInputContainer[nr].appendChild(inputElement);
 }
+
+function fixSyntaxMinValue(minMin, minHours){
+	if (minMin == "0") {
+		minMin = "00";
+	} else if (minMin == "1") {
+		minMin = "10";
+	} else if (minMin == "2") {
+		minMin = "20";
+	} else if (minMin == "3") {
+		minMin = "30";
+	} else if (minMin == "4") {
+		minMin = "40";
+	} else if (minMin == "5") {
+		minMin = "50";
+	}
+	if (minHours == "0") {
+		minHours = "00";
+	} else if (minHours == "1") {
+		minHours = "01";
+	} else if (minHours == "2") {
+		minHours = "02";
+	} else if (minHours == "3") {
+		minHours = "03";
+	} else if (minHours == "4") {
+		minHours = "04";
+	} else if (minHours == "5") {
+		minHours = "05";
+	} else if (minHours == "6") {
+		minHours = "06";
+	} else if (minHours == "7") {
+		minHours = "07";
+	} else if (minHours == "8") {
+		minHours = "08";
+	} else if (minHours == "9") {
+		minHours = "09";
+	}
+	var minValue = minHours + ":" + minMin;
+	return minValue;
+}
+
+function fixSyntaxMaxValue (maxMin, maxHours) {
+	if (maxMin == "0") {
+		maxMin = "00";
+	} else if (maxMin == "1") {
+		maxMin = "10";
+	} else if (maxMin == "2") {
+		maxMin = "20";
+	} else if (maxMin == "3") {
+		maxMin = "30";
+	} else if (maxMin == "4") {
+		maxMin = "40";
+	} else if (maxMin == "5") {
+		maxMin = "50";
+	}
+	if (maxHours == "0") {
+		maxHours = "00";
+	} else if (maxHours == "1") {
+		maxHours = "01";
+	} else if (maxHours == "2") {
+		maxHours = "02";
+	} else if (maxHours == "3") {
+		maxHours = "03";
+	} else if (maxHours == "4") {
+		maxHours = "04";
+	} else if (maxHours == "5") {
+		maxHours = "05";
+	} else if (maxHours == "6") {
+		maxHours = "06";
+	} else if (maxHours == "7") {
+		maxHours = "07";
+	} else if (maxHours == "8") {
+		maxHours = "08";
+	} else if (maxHours == "9") {
+		maxHours = "09";
+	}
+	var maxValue = maxHours + ":" + maxMin;
+	return maxValue;
+}
+
 
 function getFunctionNameForSleepAtNight(night) {
 	console.log('Eventlistener grejjen anropas!');
