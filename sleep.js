@@ -1,4 +1,4 @@
-$(document).ready(function() {
+$(document).ready(function () {
 	$('.example').css('color', '#80808082');
 	$('.container-fluid').css('width', '90%');
 	$('body').css('font-size', '92%');
@@ -22,7 +22,7 @@ $(document).ready(function() {
 		border: '1px solid #ced4da',
 	});
 
-	$('.addInputButton').hover(function() {
+	$('.addInputButton').hover(function () {
 		$(this).css({
 			cursor: 'pointer',
 		});
@@ -68,38 +68,148 @@ function calculateTotalSleepTimeForNight(nightNr) {
 		totalSleepHours = (totalSleepTimeMin - totalSleepMin) / 60;
 		totalSleepTime = totalSleepHours + ' tim ' + totalSleepMin + ' min';
 
-		//FELMEDDELANDEN, SKAPA EGEN FUNKTION AV DESSA
-		// Om totalBedTimeMin är mer än 22h --> ej timligt. För mkt tid i sängen.
-		if (totalBedTimeMin > 1320) {
-			alert(
-				'Du har skrivit att du varit i sängen mer än 22h. Det låter inte rimligt. Dubbelkolla att det stämmer!'
-			);
-		} else 
-		//Om totalSleepTimeMin är mer än 1320 min --> meddelande om att det ej är rimligt. Har sovit föt mkt.
-		if (totalSleepTimeMin > 1320) {
-			alert('Du har skrivit att du sovit mer än 22h. Det låter inte rimligt. Dubbelkolla att det stämmer!');
-		} else
-		//Om totalBedTimeMin är mindre än TotalsleepTimeMin --> något stämmer inte
-		if (totalBedTimeMin < totalSleepTimeMin) {
-			alert(
-				'Du har skrivit att du sovit mer än du varit i sängen. Detta låter inte rimligt. Dubbelkolla att det stämmer!'
-			);
-		} else 
-		//Om skillnad mellan bedTimeMin och sleepTimeMin är mer än 900min --> ge meddelande om att det ej är rimligt
-		var inBedWithoutSleepingMin = totalBedTimeMin - totalSleepTimeMin;
-		if (inBedWithoutSleepingMin > 900) {
-			alert(
-				'Du har skrivit att du varit i sängen utan att sova mer än 15 timmar. Detta låter inte rimligt. Dubbelkolla att det stämmer!'
-			);
-		} else {
 
-		//document.getElementById('outputsleeptimeDay' + nightNr).value = totalSleepTime;
-		//document.getElementById('outputsleepEfficacyDay' + nightNr).value = sleepEfficacy + '%';
-		}
+		var inBedWithoutSleepingMin = totalBedTimeMin - totalSleepTimeMin;
+		checkingValidation(totalBedTimeMin, totalSleepTime, totalSleepTimeMin, sleepEfficacy, document.getElementById('bedTimeDay' + nightNr), nightNr);
+	}
+}
+
+function checkingValidation(totalBedTimeMin, totalSleepTime, totalSleepTimeMin, sleepEfficacy, input, nightNr) {
+	console.log("anropar CheckingValidity funktionen!");
+	// skapa ett nytt datum 
+	var bedTime = new Date();
+	// sätt timmarna och minutrarna till det som skrevs in på "När gick du och la dig frågan"
+	var hours = separateHours($('#bedTimeDay' + nightNr)[0].value);
+	bedTime.setHours(hours) // --> ger allt i milliesekunder (kanske är string nu om ej funkar)
+	var minutes = separateMin($('#bedTimeDay' + nightNr)[0].value);
+	bedTime.setMinutes(minutes) // --> ger allt i milliesekunder (kanske är string nu om ej funkar)
+	// lägg till 22h timmar från tiden från "När gick du och la dig"
+	bedTime.setHours(+hours + 23);
+
+	// Gör om så att det inte blir fel när det endast är en siffra. Borde göra om till egen funktion
+	var maxMin = bedTime.getMinutes();
+	var maxHours = bedTime.getHours();
+
+	if (maxMin == "0") {
+		maxMin = "00";
+	} else if (maxMin == "1") {
+		maxMin = "10";
+	} else if (maxMin == "2") {
+		maxMin = "20";
+	} else if (maxMin == "3") {
+		maxMin = "30";
+	} else if (maxMin == "4") {
+		maxMin = "40";
+	} else if (maxMin == "5") {
+		maxMin = "50";
+	}
+	if (maxHours == "0") {
+		maxHours = "00";
+	} else 	if (maxHours == "1") {
+		maxHours = "01";
+	} else 	if (maxHours == "2") {
+		maxHours = "02";
+	} else 	if (maxHours == "3") {
+		maxHours = "03";
+	} else 	if (maxHours == "4") {
+		maxHours = "04";
+	} else 	if (maxHours == "5") {
+		maxHours = "05";
+	} else 	if (maxHours == "6") {
+		maxHours = "06";
+	} else 	if (maxHours == "7") {
+		maxHours = "07";
+	} else 	if (maxHours == "8") {
+		maxHours = "08";
+	} else 	if (maxHours == "9") {
+		maxHours = "09";
+	} 
+	var maxValue = maxHours + ":" + maxMin;
+
+	var minHours = separateHours($('#wakeTimeDay' + nightNr)[0].value);
+	var minMin = separateMin($('#wakeTimeDay' + nightNr)[0].value);
+	if (minMin == "0") {
+		minMin = "00";
+	} else if (minMin == "1") {
+		minMin = "10";
+	} else if (minMin == "2") {
+		minMin = "20";
+	} else if (minMin == "3") {
+		minMin = "30";
+	} else if (minMin == "4") {
+		minMin = "40";
+	} else if (minMin == "5") {
+		minMin = "50";
+	}
+	if (minHours == "0") {
+		minHours = "00";
+	} else if (minHours == "1") {
+		minHours = "01";
+	} else if (minHours == "2") {
+		minHours = "02";
+	} else if (minHours == "3") {
+		minHours = "03";
+	} else if (minHours == "4") {
+		minHours = "04";
+	} else if (minHours == "5") {
+		minHours = "05";
+	} else if (minHours == "6") {
+		minHours = "06";
+	} else if (minHours == "7") {
+		minHours = "07";
+	} else if (minHours == "8") {
+		minHours = "08";
+	} else if (minHours == "9") {
+		minHours = "09";
+	} 
+	var minValue = minHours + ":" + minMin;
+	$("#upTimeDay" + nightNr).attr({ "min": minValue, "max": maxValue});
+
+
+
+	// Om totalBedTimeMin är mer än 22h --> ej rimligt. För mkt tid i sängen.
+	if (totalBedTimeMin > 1320) {
+		$("#errorUpTimeDay" + nightNr).show();
+		document.getElementById('outputsleeptimeDay' + nightNr).value = "-";
+		document.getElementById('outputsleepEfficacyDay' + nightNr).value = "-";
+		document.getElementById('outputbedtimeDay' + nightNr).value = "-";
+		//Om totalSleepTimeMin är mer än 1320 min --> meddelande om att det ej är rimligt. Har sovit föt mkt.
+	} else if (totalSleepTimeMin > 1320) {
+		$("#errorWakeTimeDay" + nightNr).show();
+		document.getElementById('outputsleeptimeDay' + nightNr).value = "-";
+		document.getElementById('outputsleepEfficacyDay' + nightNr).value = "-";
+		document.getElementById('outputbedtimeDay' + nightNr).value = "-";
+		// Om totalBedTimeMin är mindre än TotalsleepTimeMin --> något stämmer inte
+	} else if (totalBedTimeMin < totalSleepTimeMin) {
+		$("#errorTimeDay" + nightNr).show();
+		document.getElementById('outputsleeptimeDay' + nightNr).value = "-";
+		document.getElementById('outputsleepEfficacyDay' + nightNr).value = "-";
+		document.getElementById('outputbedtimeDay' + nightNr).value = "-";
+	} else {
+		// input is fine 
+		$("#errorUpTimeDay" + nightNr).hide();
+		$("#errorWakeTimeDay" + nightNr).hide();
+		$("#errorTimeDay" + nightNr).hide();
 		document.getElementById('outputsleeptimeDay' + nightNr).value = totalSleepTime;
 		document.getElementById('outputsleepEfficacyDay' + nightNr).value = sleepEfficacy + '%';
 	}
+
+
+
+	// if (totalBedTimeMin < totalSleepTimeMin) {
+	// 	alert(
+	// 		'Du har skrivit att du sovit mer än du varit i sängen. Detta låter inte rimligt. Dubbelkolla att det stämmer!'
+	// 	);
+	// } else 
+	// //Om skillnad mellan bedTimeMin och sleepTimeMin är mer än 900min --> ge meddelande om att det ej är rimligt
+	// var inBedWithoutSleepingMin = totalBedTimeMin - totalSleepTimeMin;
+	// if (inBedWithoutSleepingMin > 900) {
+	// 	alert(
+	// 		'Du har skrivit att du varit i sängen utan att sova mer än 15 timmar. Detta låter inte rimligt. Dubbelkolla att det stämmer!'
+	// 	);
+	// } 
 }
+
 
 function addAwakeTimeAtNight(nightNr) {
 	console.log('kör AwakeTimeAtNight' + nightNr);
@@ -109,7 +219,7 @@ function addAwakeTimeAtNight(nightNr) {
 	var awakeTimeAtNightList = document.querySelectorAll(
 		'#awakeTimeAtNight #night' + nightNr + ' .addInputContainer input'
 	);
-	awakeTimeAtNightList.forEach(function(input) {
+	awakeTimeAtNightList.forEach(function (input) {
 		awakeHours = awakeHours + separateHours(input.value);
 		awakeMin = awakeMin + separateMin(input.value);
 	});
@@ -239,7 +349,7 @@ function addInputfield(nr) {
 	inputElement.className = 'form-control form-control-sm';
 	inputElement.addEventListener(
 		'change',
-		function() {
+		function () {
 			getFunctionNameForSleepAtNight(nr);
 		},
 		false
