@@ -1,6 +1,6 @@
 //CSS via jQuery eftersom det inte fungerar via vanlig CSS fil just nu 
 $(document).ready(function () {
-	$('.example').css('color', '#737373');
+	$('.example').css('color', '#80808082'); //for Safari #737373
 	$('.container-fluid').css('width', '90%');
 	$('body').css('font-size', '92%');
 	$('.titlesection').css({
@@ -87,17 +87,15 @@ function checkingValidation(totalBedTimeMin, totalSleepTime, totalSleepTimeMin, 
 	bedTime.setMinutes(minutes) // --> ger allt i milliesekunder (kanske är string nu om ej funkar)
 	// lägg till 22h timmar från tiden från "När gick du och la dig"
 	bedTime.setHours(+hours + 23);
-
 	var maxMin = bedTime.getMinutes();
 	var maxHours = bedTime.getHours();
 	// Gör om så att det inte blir fel när det endast är en siffra. 
     var maxValue = fixSyntaxMaxValue(maxMin, maxHours);
-
 	var minHours = separateHours($('#wakeTimeDay' + nightNr)[0].value);
 	var minMin = separateMin($('#wakeTimeDay' + nightNr)[0].value);
 	// Gör om så att det inte blir fel när det endast är en siffra. 
 	var minValue = fixSyntaxMinValue(minMin, minHours);
-
+	$("#upTimeDay" + nightNr).attr({ "min": minValue, "max": maxValue });
 	$("#upTimeDay" + nightNr).attr({ "min": minValue, "max": maxValue });
 
 	// Om totalBedTimeMin är mer än 22h --> ej rimligt. För mkt tid i sängen.
