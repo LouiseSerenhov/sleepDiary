@@ -28,11 +28,16 @@ $(document).ready(function () {
 			cursor: 'pointer',
 		});
 	});
+	$('.errorMessage').css({
+		'border-width': '4px',
+		'border-color:': 'red',
+	});
 });
 
 
 //JAVASCRIPT KODEN 
 
+//Borde heta calculateNight
 function calculateTotalBedTimeForNight(nightNr) {
 	console.log('kallar på nya funktionen calculateTotalBEdTimeForNigth' + nightNr);
 	var bedTime = document.getElementById('bedTimeDay' + nightNr).value;
@@ -96,8 +101,7 @@ function checkingValidation(totalBedTimeMin, totalSleepTime, totalSleepTimeMin, 
 	// Gör om så att det inte blir fel när det endast är en siffra. 
 	var minValue = fixSyntaxMinValue(minMin, minHours);
 	$("#upTimeDay" + nightNr).attr({ "min": minValue, "max": maxValue });
-	$("#upTimeDay" + nightNr).attr({ "min": minValue, "max": maxValue });
-
+	
 	// Om totalBedTimeMin är mer än 22h --> ej rimligt. För mkt tid i sängen.
 	if (totalBedTimeMin > 1320) {
 		$("#errorUpTimeDay" + nightNr).show();
@@ -125,9 +129,6 @@ function checkingValidation(totalBedTimeMin, totalSleepTime, totalSleepTimeMin, 
 		document.getElementById('outputsleepEfficacyDay' + nightNr).value = sleepEfficacy + '%';
 		document.getElementById('outputbedtimeDay' + nightNr).value = totalBedTime;
 	}
-
-
-
 
 	// //Om skillnad mellan bedTimeMin och sleepTimeMin är mer än 900min --> ge meddelande om att det ej är rimligt
 	// var inBedWithoutSleepingMin = totalBedTimeMin - totalSleepTimeMin;
