@@ -37,8 +37,7 @@ $(document).ready(function () {
 
 //JAVASCRIPT KODEN 
 
-//Borde heta calculateNight
-function calculateTotalBedTimeForNight(nightNr) {
+function calculateNight(nightNr) {
 	console.log('kallar på nya funktionen calculateTotalBEdTimeForNigth' + nightNr);
 	var bedTime = document.getElementById('bedTimeDay' + nightNr).value;
 	var wakingUpTime = document.getElementById('upTimeDay' + nightNr).value;
@@ -83,14 +82,15 @@ function calculateTotalSleepTimeForNight(nightNr) {
 
 function checkingValidation(totalBedTimeMin, totalSleepTime, totalSleepTimeMin, sleepEfficacy, nightNr, totalBedTime) {
 	console.log("anropar CheckingValidity funktionen!");
-	// skapa ett nytt datum 
+	
+	// skapa ett nytt datum för att skapa maxvärde på input
 	var bedTime = new Date();
 	// sätt timmarna och minutrarna till det som skrevs in på "När gick du och la dig frågan"
 	var hours = separateHours($('#bedTimeDay' + nightNr)[0].value);
 	bedTime.setHours(hours) // --> ger allt i milliesekunder (kanske är string nu om ej funkar)
 	var minutes = separateMin($('#bedTimeDay' + nightNr)[0].value);
 	bedTime.setMinutes(minutes) // --> ger allt i milliesekunder (kanske är string nu om ej funkar)
-	// lägg till 22h timmar från tiden från "När gick du och la dig"
+	// lägg till 23h timmar från tiden från "När gick du och la dig", om man kör 22 kmr aldrig fina felmedelandet upp
 	bedTime.setHours(+hours + 23);
 	var maxMin = bedTime.getMinutes();
 	var maxHours = bedTime.getHours();
@@ -129,16 +129,8 @@ function checkingValidation(totalBedTimeMin, totalSleepTime, totalSleepTimeMin, 
 		document.getElementById('outputsleepEfficacyDay' + nightNr).value = sleepEfficacy + '%';
 		document.getElementById('outputbedtimeDay' + nightNr).value = totalBedTime;
 	}
-
-	// //Om skillnad mellan bedTimeMin och sleepTimeMin är mer än 900min --> ge meddelande om att det ej är rimligt
-	// var inBedWithoutSleepingMin = totalBedTimeMin - totalSleepTimeMin;
-	// if (inBedWithoutSleepingMin > 900) {
-	// 	alert(
-	// 		'Du har skrivit att du varit i sängen utan att sova mer än 15 timmar. Detta låter inte rimligt. Dubbelkolla att det stämmer!'
-	// 	);
-	// } 
+	// Lägg till Om skillnad mellan bedTimeMin och sleepTimeMin är mer än 900min (15h) --> ge meddelande om att det ej är rimligt
 }
-
 
 function addAwakeTimeAtNight(nightNr) {
 	console.log('kör AwakeTimeAtNight' + nightNr);
@@ -156,14 +148,14 @@ function addAwakeTimeAtNight(nightNr) {
 	return awakeTotalMin;
 }
 
+
 //Utilityfunktioner!
 
 function calculateTotalBedTime(bedTime, upTime) {
 	if (!bedTime || !upTime) {
-		console.log('saknar något svar för att räkna ut');
 		return;
 	}
-	return calculateTimeBetweenTime(bedTime, upTime);
+	return calculateTimeDiff(bedTime, upTime);
 }
 
 function calculateTotalSleepTimeMin(bedTime, upTime, sleepTime, wakeTime, wakeInMiddleOfNightMin) {
@@ -172,14 +164,11 @@ function calculateTotalSleepTimeMin(bedTime, upTime, sleepTime, wakeTime, wakeIn
 	console.log(upTime);
 	console.log(sleepTime);
 	console.log(wakeTime);
-
+	//Något saknas för att räkna ut
 	if (!bedTime || !upTime || !sleepTime || !wakeTime) {
-		console.log('saknar något svar för att räkna ut totalSleepTimeMin');
 		return;
 	}
-
 	var totalSleepTimeMin = calculateTimeDiffMin(sleepTime, wakeTime);
-
 	if (wakeInMiddleOfNightMin) {
 		totalSleepTimeMin = totalSleepTimeMin - wakeInMiddleOfNightMin;
 	}
@@ -188,7 +177,6 @@ function calculateTotalSleepTimeMin(bedTime, upTime, sleepTime, wakeTime, wakeIn
 
 function calculateTimeDiffMin(time1, time2) {
 	console.log('Anropar calculateTimeDiffMin');
-	console.log(time1, time2, 'tiderna i calculateTimediffMin');
 	var time1Hours = separateHours(time1);
 	var time1Min = separateMin(time1);
 	var time2Hours = separateHours(time2);
@@ -214,11 +202,10 @@ function calculateTimeDiffMin(time1, time2) {
 		totalDiffMin = time2Min - time1Min;
 	}
 	totalDiffTime = totalDiffHours * 60 + totalDiffMin;
-	console.log(totalDiffTime, 'TotalDiffTimeMin skickas tillbaks');
 	return totalDiffTime;
 }
 
-function calculateTimeBetweenTime(time1, time2) {
+function calculateTimeDiff(time1, time2) {
 	var time1Hours = separateHours(time1);
 	var time1Min = separateMin(time1);
 	var time2Hours = separateHours(time2);
@@ -240,7 +227,6 @@ function calculateTimeBetweenTime(time1, time2) {
 		totalDiffMin = time2Min - time1Min;
 	}
 	totalDiffTime = totalDiffHours + 'tim ' + totalDiffMin + 'min';
-	console.log(totalDiffTime);
 	return totalDiffTime;
 }
 
