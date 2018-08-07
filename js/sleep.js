@@ -46,7 +46,6 @@ var minuteSelect = document.querySelector('#minute');
 
 // hide fallback initially
 fallbackPicker.style.display = 'none';
-fallbackLabel.style.display = 'none';
 
 // test whether a new date input falls back to a text input or not
 var test = document.createElement('input');
