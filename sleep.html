@@ -23,6 +23,7 @@
                 <p>Börja alltid sömndagboken med att på morgonen fylla i hur Natt 1 har varit. Dagboken är färdig när du fyllt
                     i allt till och med Dag 7.</p>
             </div>
+            
 
             <form name="sleepdiary" class="text-center">
                 <div class="table-responsive{-sm|-md|-lg|-xl} diarydiv">
@@ -47,6 +48,7 @@
                             <tr>
                                 <th scope="row">Sov du på dagen igår? Om ja, vilken tid och hur länge?
                                 </th>
+                               
                                 <td>
                                     <textarea rows="3" cols="11" id="awakeAtDayExample" name="awakeAtDayExample" class="example" disabled> 20 min, 15:00</textarea>
                                 </td>
@@ -106,9 +108,25 @@
                                 <td>
                                     <input type="time" class="form-control form-control-sm example" id="col0xrow2" value="22:10" disabled>
                                 </td>
+                                <div class="nativeTimePicker">
                                 <td>
                                     <input type="time" class="form-control form-control-sm" id="bedTimeDay1" name="bedtimeDay1" onchange="calculateNight(1)">
                                 </td>
+                                </div>
+                                <div class="fallbackTimePicker">
+                                        <div>
+                                          <span>
+                                            <label for="hour">Hour:</label>
+                                            <select id="hour" name="hour">
+                                            </select>
+                                          </span>
+                                          <span>
+                                            <label for="minute">Minute:</label>
+                                            <select id="minute" name="minute">
+                                            </select>
+                                          </span>
+                                        </div>
+                                      </div>
                                 <td>
                                     <input type="time" class="form-control form-control-sm" id="bedTimeDay2" name="bedtimeDay2" onchange="calculateNight(2)">
                                 </td>
