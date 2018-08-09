@@ -10,11 +10,14 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src="js/modernizr-custom.js"></script>
+    <script src="js/time-polyfill.min.js"></script>
+    
 </head>
 
 <body>
 
-
+<div class="sleep-diary">
 
     <div class="row">
         <div class="container-fluid">
@@ -53,10 +56,10 @@
                                     <textarea rows="3" cols="11" id="awakeAtDayExample" name="awakeAtDayExample" class="example" disabled> 20 min, 15:00</textarea>
                                 </td>
                                 <td>
-                                    <textarea rows="3" cols="11" id="awakeAtDayNight1" name="awakeAtDayNight1"></textarea>
+                                    <textarea rows="3" cols="11" data-night-no="1" class="awakeAtDayNight" name="awakeAtDayNight1"></textarea>
                                 </td>
                                 <td>
-                                    <textarea rows="3" cols="11" id="awakeAtDayNight2" name="awakeAtDayNight2"></textarea>
+                                    <textarea rows="3" cols="11" data-night-no="2" class="awakeAtDayNight" name="awakeAtDayNight2"></textarea>
                                 </td>
                                 <td>
                                     <textarea rows="3" cols="11" id="awakeAtDayNight3" name="awakeAtDayNight3"></textarea>
@@ -82,7 +85,7 @@
                                     <textarea rows="3" cols="11" id="medecineDayExample" name="medecineDayExample" class="example" disabled> 1 Sonata,&#13;&#10; 10mg,&#13;&#10; 23:55</textarea>
                                 </td>
                                 <td>
-                                    <textarea rows="3" cols="11" id="medicineDay1" name="medicineDay1"></textarea>
+                                    <textarea rows="3" cols="11" data-night-no="1" class="medicineDay" name="medicineDay1"></textarea>
                                 </td>
                                 <td>
                                     <textarea rows="3" cols="11" id="medicineDay2" name="medicineDay2"></textarea>
@@ -108,27 +111,14 @@
                                 <td>
                                     <input type="time" class="form-control form-control-sm example" id="col0xrow2" value="22:10" disabled>
                                 </td>
-                                <div class="nativeTimePicker">
+                             
                                 <td>
-                                    <input type="time" class="form-control form-control-sm" id="bedTimeDay1" name="bedtimeDay1" onchange="calculateNight(1)">
+                                    <input type="time" class="form-control form-control-sm bedTimeDay" data-night-no="1" name="bedtimeDay1"  onchange="calculateNightNew()">
                                 </td>
-                                </div>
-                                <div class="fallbackTimePicker">
-                                        <div>
-                                          <span>
-                                            <label for="hour">Hour:</label>
-                                            <select id="hour" name="hour">
-                                            </select>
-                                          </span>
-                                          <span>
-                                            <label for="minute">Minute:</label>
-                                            <select id="minute" name="minute">
-                                            </select>
-                                          </span>
-                                        </div>
-                                      </div>
+                               
+                            
                                 <td>
-                                    <input type="time" class="form-control form-control-sm" id="bedTimeDay2" name="bedtimeDay2" onchange="calculateNight(2)">
+                                    <input type="time" class="form-control form-control-sm bedTimeDay" data-night-no="2" name="bedtimeDay2" onchange="calculateNightNew()">
                                 </td>
                                 <td>
                                     <input type="time" class="form-control form-control-sm" id="bedTimeDay3" name="bedtimeDay3" onchange="calculateNight(3)">
@@ -209,10 +199,10 @@
                                         disabled>
                                 </td>
                                 <td>
-                                    <input type="time" class="form-control form-control-sm" id="sleepTimeDay1" name="sleepTimeDay1" onchange="calculateTotalSleepTimeForNight(1)">
+                                    <input type="time" class="form-control form-control-sm sleepTimeDay" data-night-no="1" name="sleepTimeDay1" onchange="calculateTotalSleepTimeWrapper()">
                                 </td>
                                 <td>
-                                    <input type="time" class="form-control form-control-sm" id="sleepTimeDay2" name="sleepTimeDay2" onchange="calculateTotalSleepTimeForNight(2)">
+                                    <input type="time" class="form-control form-control-sm sleepTimeDay" data-night-no="2" name="sleepTimeDay2" onchange="calculateTotalSleepTimeWrapper()">
                                 </td>
                                 <td>
                                     <input type="time" class="form-control form-control-sm" id="sleepTimeDay3" name="sleepTimeDay3" onchange="calculateTotalSleepTimeForNight(3)">
@@ -244,16 +234,16 @@
                                     </div>
                                 </td>
                                 <td id="night1">
-                                    <div class="addInputContainer">
-                                        <input type="time" class="form-control form-control-sm" id="1stAwakeAtNight1" name="awakeTimeAtNight1" onchange="calculateTotalSleepTimeForNight(1)">
+                                    <div class="addInputContainer" data-night-no="1">
+                                        <input type="time" class="form-control form-control-sm AwakeAtNight" data-night-no="1" name="awakeTimeAtNight1_1" onchange="calculateTotalSleepTimeWrapper()">
                                     </div>
-                                    <input type="button" class="addInputButton" onclick="addInputfield(0);" value="+" />
+                                    <input type="button" class="addInputButton" onclick="addInputfieldNew();" value="+" data-night-no="1"  />
                                 </td>
                                 <td id="night2">
-                                    <div class="addInputContainer">
-                                        <input type="time" class="form-control form-control-sm" id="1stAwakeAtNight2" name="awakeTimeAtNight2" onchange="calculateTotalSleepTimeForNight(2)">
+                                    <div class="addInputContainer" data-night-no="2">
+                                        <input type="time" class="form-control form-control-sm AwakeAtNight" data-night-no="2" name="awakeTimeAtNight2_1" onchange="calculateTotalSleepTimeWrapper()">
                                     </div>
-                                    <input type="button" class="addInputButton" onclick="addInputfield(1);" value="+" />
+                                    <input type="button" class="addInputButton" onclick="addInputfieldNew();" value="+" data-night-no="2"  />
                                 </td>
                                 <td id="night3">
                                     <div class="addInputContainer">
@@ -294,14 +284,14 @@
                                 </td>
                                 <td>
 
-                                    <input type="time" class="form-control form-control-sm" id="wakeTimeDay1" name="wakeTimeDay1" onchange="calculateTotalSleepTimeForNight(1)">
+                                    <input type="time" class="form-control form-control-sm wakeTimeDay" data-night-no="1" name="wakeTimeDay1" onchange="calculateTotalSleepTimeWrapper()">
                                     <div id="errorWakeTimeDay1" class="invalid-feedback errorMessage">
                                             Du försöker skriva att du sovit mer än 22 timmar eller att du stigit upp innan du vaknat. Dubbelkolla att det stämmer!
                                     </div>
 
                                 </td>
                                 <td>
-                                    <input type="time" class="form-control form-control-sm" id="wakeTimeDay2" name="wakeTimeDay2" onchange="calculateTotalSleepTimeForNight(2)">
+                                    <input type="time" class="form-control form-control-sm wakeTimeDay" data-night-no="2" name="wakeTimeDay2" onchange="calculateTotalSleepTimeWrapper()">
                                     <div id="errorWakeTimeDay2" class="invalid-feedback errorMessage">
                                             Du försöker skriva att du sovit mer än 22 timmar eller att du stigit upp innan du vaknat. Dubbelkolla att det stämmer!
                                     </div>
@@ -344,7 +334,7 @@
 
                                 </td>
                                 <td>
-                                    <input type="time" class="form-control form-control-sm" id="upTimeDay1" name="upTimeDay1" onchange="calculateNight(1)">
+                                    <input type="time" class="form-control form-control-sm upTimeDay" data-night-no="1" name="upTimeDay1" onchange="calculateNightNew()">
                                     <div id="errorUpTimeDay1" class="invalid-feedback errorMessage">
                                         Du försöker skriva att du varit i sängen mer än 22 timmar eller att du stigit upp innan du vaknat. Dubbelkolla att det stämmer!
                                     </div>
@@ -353,7 +343,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <input type="time" class="form-control form-control-sm" id="upTimeDay2" name="upTimeDay2" onchange="calculateNight(2)">
+                                    <input type="time" class="form-control form-control-sm upTimeDay" data-night-no="2" name="upTimeDay2" onchange="calculateNightNew()">
                                     <div id="errorUpTimeDay2" class="invalid-feedback errorMessage">
                                             Du försöker skriva att du varit i sängen mer än 22 timmar eller att du stigit upp innan du vaknat. Dubbelkolla att det stämmer!
                                     </div>
@@ -489,10 +479,10 @@
                                         <input type="text" name="" class="inputDailySummary example" value=" 8tim 50min" disabled>
                                     </td>
                                     <td class="outputStyle">
-                                        <input type="text" name="outputbedtime" id="outputbedtimeDay1" class="inputDailySummary" disabled>
+                                        <input type="text" name="outputbedtime" data-night-no="1" class="inputDailySummary outputbedtimeDay" disabled>
                                     </td>
                                     <td class="outputStyle">
-                                        <input type="text" name="outputbedtime" id="outputbedtimeDay2" class="inputDailySummary" disabled>
+                                        <input type="text" name="outputbedtime" data-night-no="2" class="inputDailySummary outputbedtimeDay" disabled>
                                     </td>
                                     <td class="outputStyle">
                                         <input type="text" name="outputbedtime" id="outputbedtimeDay3" class="inputDailySummary" disabled>
@@ -517,10 +507,10 @@
                                         <input type="text" name="" class="inputDailySummary example" value=" 4tim 10min" disabled>
                                     </td>
                                     <td class="outputStyle">
-                                        <input type="text" name="outputbedtime" id="outputsleeptimeDay1" class="inputDailySummary" disabled>
+                                        <input type="text" name="outputbedtime" data-night-no="1" class="inputDailySummary outputsleeptimeDay" disabled>
                                     </td>
                                     <td class="outputStyle">
-                                        <input type="text" name="outputbedtime" id="outputsleeptimeDay2" class="inputDailySummary" disabled>
+                                        <input type="text" name="outputbedtime" data-night-no="2" class="inputDailySummary outputsleeptimeDay" disabled>
                                     </td>
                                     <td class="outputStyle">
                                         <input type="text" name="outputbedtime" id="outputsleeptimeDay3" class="inputDailySummary" disabled>
@@ -544,10 +534,10 @@
                                         <input type="text" name="" class="inputDailySummary example" value=" 47%" disabled>
                                     </td>
                                     <td class="outputStyle">
-                                        <input type="text" name="outputbedtime" id="outputsleepEfficacyDay1" class="inputDailySummary" disabled>
+                                        <input type="text" name="outputbedtime" data-night-no="1" class="inputDailySummary outputsleepEfficacyDay" disabled>
                                     </td>
                                     <td class="outputStyle">
-                                        <input type="text" name="outputbedtime" id="outputsleepEfficacyDay2" class="inputDailySummary" disabled>
+                                        <input type="text" name="outputbedtime" data-night-no="2" class="inputDailySummary outputsleepEfficacyDay" disabled>
                                     </td>
                                     <td class="outputStyle">
                                         <input type="text" name="outputbedtime" id="outputsleepEfficacyDay3" class="inputDailySummary" disabled>
@@ -575,8 +565,9 @@
         </div>
 
     </div>
-
+    <script type="text/javascript" src="js/modernizr-custom.js"></script>
     <script type="text/javascript" src="js/sleep.js"></script>
+</div>
 </body>
 
 </html>

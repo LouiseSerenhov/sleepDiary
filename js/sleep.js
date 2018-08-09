@@ -37,47 +37,163 @@ $(document).ready(function () {
 
 //JAVASCRIPT KODEN 
 
-//Internet Explorer input field fix
-var nativePicker = document.querySelector('.nativeTimePicker');
-var fallbackPicker = document.querySelector('.fallbackTimePicker');
 
-var hourSelect = document.querySelector('#hour');
-var minuteSelect = document.querySelector('#minute');
+// ****************************
+//       NEW FUNCTIONS 
+// ****************************
 
-// hide fallback initially
-fallbackPicker.style.display = 'none';
 
-// test whether a new date input falls back to a text input or not
-var test = document.createElement('input');
-test.type = 'time';
-// if it does, run the code inside the if() {} block
-if(test.type === 'text') {
-  // hide the native picker and show the fallback
-  nativePicker.style.display = 'none';
-  fallbackPicker.style.display = 'block';
+function get_night_element($parent_div, class_name, night_no){ //exempel div sleepdiary,bedTimeday, upTimeDay 
+	var search_str = '.' + class_name + '[data-night-no="' + night_no + '"]';
+	console.log(search_str);
+	var $elements = $parent_div.find(search_str); //hittar inputen och och lägger i en array
 
-  // populate the hours and minutes dynamically
-  populateHours();
-  populateMinutes();
+	if($elements.length !== 1){
+		throw 'Could not locate '+ class_name + ' ' + ' ' + night_no;
+	}
+	return $elements; //return input
 }
 
-function populateHours() {
-  // populate the hours <select> with the 6 open hours of the day
-  for(var i = 0; i <= 24; i++) {
-    var option = document.createElement('option');
-    option.textContent = i;
-    hourSelect.appendChild(option);
-  }
+
+function calculateNightNew() {
+	var $target = $(event.target); //html elementet input lådan
+	var night_no = $target.data('night-no'); //gets the nightNr
+	var $parent_div = $target.closest('.sleep-diary'); //sleepDiary-diven i detta fall, andra i andra flikar
+	console.log('kallar på nya funktionen calculateTotalBEdTimeForNigth' + night_no);
+	var bedTime = get_night_element($parent_div, 'bedTimeDay', night_no).val(); //får värdet i inputs med bedTimeDay 
+	var wakingUpTime =  get_night_element($parent_div, 'upTimeDay', night_no).val(); //får värdet i inputs med upTimeDay 
+	var totalBedTime = calculateTotalBedTime(bedTime, wakingUpTime);
+	calculateTotalSleepTimeForNightNew($parent_div, night_no);
+	if (totalBedTime) {
+		get_night_element($parent_div, 'outputbedtimeDay', night_no).val(totalBedTime);
+	}
 }
 
-function populateMinutes() {
-  // populate the minutes <select> with the 60 hours of each minute
-  for(var i = 0; i <= 59; i++) {
-    var option = document.createElement('option');
-    option.textContent = (i < 10) ? ("0" + i) : i;
-    minuteSelect.appendChild(option);
-  }
+function calculateTotalSleepTimeWrapper() {
+	var $target = $(event.target); 
+	var night_no = $target.data('night-no');
+	var $parent_div = $target.closest('.sleep-diary');
+	calculateTotalSleepTimeForNightNew($parent_div, night_no);
 }
+
+function calculateTotalSleepTimeForNightNew($parent_div, night_no) {
+	console.log('Anropar nya nya funktionen calculateTotalSleepTimeForNight' + night_no);
+	var bedTime = get_night_element($parent_div, 'bedTimeDay', night_no).val();
+	var upTime = get_night_element($parent_div, 'upTimeDay', night_no).val();
+	var sleepTime = get_night_element($parent_div, 'sleepTimeDay', night_no).val();
+	var wakeTime =  get_night_element($parent_div, 'wakeTimeDay', night_no).val();
+	var $AwakeTimeAtNights = get_night_element($parent_div, 'addInputContainer', night_no).find('.AwakeAtNight');
+	awakeTimeAtNight = sumAwakeTimeAtNightNew($AwakeTimeAtNights);
+	var totalSleepHours;
+	var totalSleepMin;
+	var totalSleepTime;
+	var totalBedTime = calculateTotalBedTime(bedTime, upTime);
+	var totalBedTimeMin = calculateTimeDiffMin(bedTime, upTime);
+	var totalSleepTimeMin = calculateTotalSleepTimeMin(bedTime, upTime, sleepTime, wakeTime, awakeTimeAtNight);
+	var sleepEfficacy = Math.round((totalSleepTimeMin / totalBedTimeMin) * 100);
+	if (totalSleepTimeMin) {
+		totalSleepMin = totalSleepTimeMin % 60;
+		totalSleepHours = (totalSleepTimeMin - totalSleepMin) / 60;
+		totalSleepTime = totalSleepHours + 'tim ' + totalSleepMin + 'min';
+		checkingValidationNew(
+			$parent_div, 
+			night_no, 
+			totalBedTimeMin, 
+			totalSleepTime, 
+			totalSleepTimeMin, 
+			sleepEfficacy,  
+			totalBedTime);
+	
+	}
+}
+
+function checkingValidationNew($parent_div, night_no, totalBedTimeMin, totalSleepTime, totalSleepTimeMin, sleepEfficacy, totalBedTime) {
+	console.log("anropar CheckingValidity funktionen!");
+	
+	// skapa ett nytt datum för att skapa maxvärde på input
+	var bedTime = new Date();
+	// sätt timmarna och minutrarna till det som skrevs in på "När gick du och la dig frågan"
+	var hours = separateHours(get_night_element($parent_div, 'bedTimeDay', night_no).val());
+	bedTime.setHours(hours) // --> ger allt i milliesekunder (kanske är string nu om ej funkar)
+	var minutes = separateMin(get_night_element($parent_div, 'bedTimeDay', night_no).val());
+	bedTime.setMinutes(minutes) // --> ger allt i milliesekunder (kanske är string nu om ej funkar)
+	// lägg till 23h timmar från tiden från "När gick du och la dig", om man kör 22 kmr aldrig fina felmedelandet upp
+	bedTime.setHours(+hours + 23);
+	var maxMin = bedTime.getMinutes();
+	var maxHours = bedTime.getHours();
+	// Gör om så att det inte blir fel när det endast är en siffra. 
+    var maxValue = fixSyntaxMaxValue(maxMin, maxHours);
+	var minHours = separateHours(get_night_element($parent_div, 'wakeTimeDay', night_no).val());
+	var minMin = separateMin(get_night_element($parent_div, 'wakeTimeDay', night_no).val());
+	// Gör om så att det inte blir fel när det endast är en siffra. 
+	var minValue = fixSyntaxMinValue(minMin, minHours);
+	get_night_element($parent_div, 'upTimeDay', night_no).attr({ "min": minValue, "max": maxValue });
+	
+	// Om totalBedTimeMin är mer än 22h --> ej rimligt. För mkt tid i sängen.
+	if (totalBedTimeMin > 1320) {
+		$("#errorUpTimeDay" + night_no).show();
+		get_night_element($parent_div, 'outputsleeptimeDay', night_no).val("-");
+		get_night_element($parent_div, 'outputsleepEfficacyDay', night_no).val('-');
+		get_night_element($parent_div, 'outputbedtimeDay', night_no).val("-");
+		//Om totalSleepTimeMin är mer än 1320 min --> meddelande om att det ej är rimligt. Har sovit föt mkt.
+	} else if (totalSleepTimeMin > 1320) {
+		$("#errorWakeTimeDay" + night_no).show();
+		get_night_element($parent_div, 'outputsleeptimeDay', night_no).val("-");
+		get_night_element($parent_div, 'outputsleepEfficacyDay', night_no).val('-');
+		get_night_element($parent_div, 'outputbedtimeDay', night_no).val("-");
+		// Om totalBedTimeMin är mindre än TotalsleepTimeMin --> något stämmer inte
+	} else if (totalBedTimeMin < totalSleepTimeMin) {
+		$("#errorTimeDay" + night_no).show();
+		get_night_element($parent_div, 'outputsleeptimeDay', night_no).val("-");
+		get_night_element($parent_div, 'outputsleepEfficacyDay', night_no).val('-');
+		get_night_element($parent_div, 'outputbedtimeDay', night_no).val("-");	
+	} else {
+		// input is fine 
+		$("#errorUpTimeDay" + night_no).hide();
+		$("#errorWakeTimeDay" + night_no).hide();
+		$("#errorTimeDay" + night_no).hide();
+		get_night_element($parent_div, 'outputsleeptimeDay', night_no).val(totalSleepTime);
+		get_night_element($parent_div, 'outputsleepEfficacyDay', night_no).val(sleepEfficacy + '%');
+		get_night_element($parent_div, 'outputbedtimeDay', night_no).val(totalBedTime);	
+	}
+
+	// Lägg till Om skillnad mellan bedTimeMin och sleepTimeMin är mer än 900min (15h) --> ge meddelande om att det ej är rimligt
+}
+
+function addInputfieldNew() {
+	var $target = $(event.target);
+	var night_no = $target.data('night-no');
+	var $parent_div = $target.closest('.sleep-diary');
+
+	console.log('kör addInputFiled', night_no);
+	var $currentInputContainer = get_night_element($parent_div, 'addInputContainer', night_no);
+	var input_count = $currentInputContainer.find('.AwakeAtNight').length;
+	var $input_element = $('<input type="time" class="form-control form-control-sm AwakeAtNight">');
+	$input_element.data('night-no', night_no);
+	$input_element.prop('name', 'awakeTimeAtNight' + night_no + '_' + (input_count + 1));
+	$input_element.on('change', calculateTotalSleepTimeWrapper);
+
+	$currentInputContainer.append($input_element);
+}
+
+
+function sumAwakeTimeAtNightNew($AwakeTimeAtNights) {
+	var awakeHours = 0;
+	var awakeMin = 0;
+	var awakeTotalMin = 0;
+	$AwakeTimeAtNights.each(function(index, input){
+		awakeHours = awakeHours + separateHours(input.value);
+		awakeMin = awakeMin + separateMin(input.value);
+	})
+	awakeTotalMin = awakeHours * 60 + awakeMin;
+	console.log(awakeTotalMin);
+	return awakeTotalMin;
+}
+
+// ****************************
+//       OLD FUNCTIONS 
+// ****************************
+
 
 
 
