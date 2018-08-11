@@ -5,7 +5,7 @@ $(document).ready(function () {
 	for (var i = 0; i < inputs.length; i++) {
 		inputs[i].addEventListener('blur', function () {
 			if (!this.checkValidity()) {
-				var wrongSyntaxDiv = $('<div class="invalid-feedback errorMessage">Felaktigt format. Var vänlig skriv in med formatet 11:11 (siffra:siffra).  </div>');
+				var wrongSyntaxDiv = $('<div class="invalid-format errorMessage">Felaktigt format. Var vänlig skriv in med formatet 11:11 (siffra:siffra).  </div>');
 				this.classList.add('has-error');
 				$(wrongSyntaxDiv).insertAfter($(this));
 				
@@ -28,8 +28,6 @@ $(document).ready(function () {
 		'padding-right': '70px',
 	});
 	$('.questionsColumn').css('min-width', '190px');
-	var style = $('<style>.has-error { border: 1px solid red; }</style>');
-	$('html > head').append(style);
 	$('.addInputButton').css({
 		'border-radius': '12px',
 		'background-color': 'darkseagreen',
