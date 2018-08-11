@@ -1,5 +1,19 @@
 //CSS via jQuery eftersom det inte fungerar via vanlig CSS fil just nu 
 $(document).ready(function () {
+	var inputs = document.querySelectorAll('input');
+	for (var i = 0; i < inputs.length; i++) {
+		inputs[i].addEventListener('blur', function () {
+			if (!this.checkValidity()) {
+				this.classList.add('has-error');
+			} else {
+				this.classList.remove('has-error');
+			}
+		});
+	}
+
+
+
+
 	$('.example').css('color', '#80808082'); //for Safari #737373
 	$('.container-fluid').css('width', '90%');
 	$('body').css('font-size', '92%');
@@ -312,7 +326,7 @@ function sumAwakeTimeAtNightNew($AwakeTimeAtNights) {
 
 
 
-function clearOutputField ($parent_div, night_no){
+function clearOutputField($parent_div, night_no) {
 	get_night_element($parent_div, 'outputsleeptimeDay', night_no).val("-");
 	get_night_element($parent_div, 'outputsleepEfficacyDay', night_no).val('-');
 	get_night_element($parent_div, 'outputbedtimeDay', night_no).val("-");
