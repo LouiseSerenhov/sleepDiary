@@ -11,6 +11,8 @@ $(document).ready(function () {
 				
 			} else {
 				this.classList.remove('has-error');
+				$(this.parentElement).find('.invalid-format').remove();
+
 			}
 		});
 	}
