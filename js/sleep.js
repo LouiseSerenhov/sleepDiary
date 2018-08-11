@@ -24,7 +24,8 @@ $(document).ready(function () {
 		'padding-right': '70px',
 	});
 	$('.questionsColumn').css('min-width', '190px');
-	$('.has-error').css('border', '1px solid red');
+	var style = $('<style>.has-error { border: 1px solid red; }</style>');
+	$('html > head').append(style);
 	$('.addInputButton').css({
 		'border-radius': '12px',
 		'background-color': 'darkseagreen',
