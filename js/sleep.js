@@ -1,10 +1,14 @@
 //CSS via jQuery eftersom det inte fungerar via vanlig CSS fil just nu 
 $(document).ready(function () {
+	
 	var inputs = document.querySelectorAll('input');
 	for (var i = 0; i < inputs.length; i++) {
 		inputs[i].addEventListener('blur', function () {
 			if (!this.checkValidity()) {
+				var wrongSyntaxDiv = $('<div class="invalid-feedback errorMessage">Felaktigt format. Var vänlig skriv in med formatet 11:11 (siffra:siffra).  </div>');
 				this.classList.add('has-error');
+				$(wrongSyntaxDiv).insertAfter($(this));
+				
 			} else {
 				this.classList.remove('has-error');
 			}
@@ -44,7 +48,7 @@ $(document).ready(function () {
 			cursor: 'pointer',
 		});
 	});
-	$('.errorMessage').css({
+	$('.errorMessage').css({ //funkar ej
 		'border-width': '4px',
 		'border-color:': 'red',
 	});
