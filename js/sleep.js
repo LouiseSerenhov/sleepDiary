@@ -5,7 +5,7 @@ $(document).ready(function () {
 	for (var i = 0; i < inputs.length; i++) {
 		inputs[i].addEventListener('blur', function () {
 			if (!this.checkValidity()) {
-				var wrongSyntaxDiv = $('<div class="invalid-format errorMessage">Felaktigt format. Var vänlig skriv in med formatet 11:11 (siffra:siffra).  </div>');
+				var wrongSyntaxDiv = $('<div class="invalid-format errorMessage">Felaktigt format. Var vänlig skriv in med formatet siffra:siffra samt inom vanligt tidsspann.  </div>');
 				this.classList.add('has-error');
 				$(wrongSyntaxDiv).insertAfter($(this));
 				
