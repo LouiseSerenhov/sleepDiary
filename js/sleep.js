@@ -1,4 +1,4 @@
-//CSS via jQuery eftersom det inte fungerar via vanlig CSS fil just nu 
+
 $(document).ready(function () {
 	
 	var inputs = document.querySelectorAll('input');
@@ -19,7 +19,7 @@ $(document).ready(function () {
 
 
 
-
+//CSS via jQuery eftersom det inte fungerar via vanlig CSS fil just nu 
 	$('.example').css('color', '#80808082'); //for Safari #737373
 	$('.container-fluid').css('width', '90%');
 	$('body').css('font-size', '92%');
