@@ -1,15 +1,15 @@
 
 $(document).ready(function () {
-	
-	var inputs = document.querySelectorAll('input');
 
+	//Rätt input för internet Explorer
+	var inputs = document.querySelectorAll('input');
 	for (var i = 0; i < inputs.length; i++) {
 		inputs[i].addEventListener('blur', function () {
 			if (!this.checkValidity()) {
 				var wrongSyntaxDiv = $('<div class="invalid-format errorMessage">Felaktigt format. Var vänlig skriv in med formatet siffra:siffra (se exmeplen till vänster) samt inom vanligt tidsspann.  </div>');
 				this.classList.add('has-error');
 				$(wrongSyntaxDiv).insertAfter($(this));
-				
+
 			} else {
 				this.classList.remove('has-error');
 				$(this.parentElement).find('.invalid-format').remove();
@@ -19,8 +19,7 @@ $(document).ready(function () {
 	}
 
 
-
-//CSS via jQuery eftersom det inte fungerar via vanlig CSS fil just nu 
+	//CSS via jQuery eftersom det inte fungerar via vanlig CSS fil just nu 
 	$('.example').css('color', '#80808082'); //for Safari #737373
 	$('.container-fluid').css('width', '90%');
 	$('body').css('font-size', '92%');
@@ -72,13 +71,6 @@ function get_night_element($parent_div, class_name, night_no) { //exempel div sl
 }
 
 
-// function calculateTotalSleepTimeWrapper() {
-// 	var $target = $(event.target);
-// 	var night_no = $target.data('night-no');
-// 	var $parent_div = $target.closest('.sleep-diary');
-// 	calculateTotalSleepTimeForNightNew($parent_div, night_no);
-// }
-
 function calculateNight() {
 	var $target = $(event.target); //html elementet input lådan
 	var night_no = $target.data('night-no'); //gets the nightNr
@@ -110,6 +102,34 @@ function calculateNight() {
 			sleepEfficacy,
 			totalBedTime);
 
+	}
+}
+
+function verifyFirstInput() {
+	var $target = $(event.target); //html elementet input lådan
+	var night_no = $target.data('night-no'); //gets the nightNr
+	var $parent_div = $target.closest('.sleep-diary');
+	var firstInput = get_night_element($parent_div, 'bedTimeDay', night_no).val();
+	if (firstInput == "") {
+		alert("Börja fylla i formuläret ovanifrån!");
+	}
+}
+function verifySecondInput() {
+	var $target = $(event.target); //html elementet input lådan
+	var night_no = $target.data('night-no'); //gets the nightNr
+	var $parent_div = $target.closest('.sleep-diary');
+	var secondInput = get_night_element($parent_div, 'sleepTimeDay', night_no).val();
+	if (secondInput == "") {
+		alert("Börja fylla i formuläret ovanifrån!");
+	}
+}
+function verifyThirdInput() {
+	var $target = $(event.target); //html elementet input lådan
+	var night_no = $target.data('night-no'); //gets the nightNr
+	var $parent_div = $target.closest('.sleep-diary');
+	var thirdInput = get_night_element($parent_div, 'wakeTimeDay', night_no).val();
+	if (thirdInput == "") {
+		alert("Börja fylla i formuläret ovanifrån!");
 	}
 }
 
