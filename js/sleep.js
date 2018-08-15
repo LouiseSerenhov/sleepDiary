@@ -1,22 +1,27 @@
 
 $(document).ready(function () {
-
 	//Rätt input för internet Explorer
-	var inputs = document.querySelectorAll('input');
-	for (var i = 0; i < inputs.length; i++) {
-		inputs[i].addEventListener('blur', function () {
-			if (!this.checkValidity()) {
-				var wrongSyntaxDiv = $('<div class="invalid-format errorMessage">Felaktigt format. Var vänlig skriv in med formatet siffra:siffra (se exmeplen till vänster) samt inom vanligt tidsspann.  </div>');
-				this.classList.add('has-error');
-				$(wrongSyntaxDiv).insertAfter($(this));
+	if (/MSIE \d|Trident.*rv:/.test(navigator.userAgent)) {
+		var inputs = document.querySelectorAll('input');
+		for (var i = 0; i < inputs.length; i++) {
+			inputs[i].addEventListener('blur', function () {
+				//om vallidity är fel + den har inte "has-error" klass
+				if (!this.checkValidity() && !this.hasClass("has-error")) {
+					var wrongSyntaxDiv = $('<div class="invalid-format errorMessage">Felaktigt format. Var vänlig skriv in med formatet siffra:siffra (se exmeplen till vänster) samt inom vanligt tidsspann.  </div>');
+					this.classList.add('has-error');
+					$(wrongSyntaxDiv).insertAfter($(this));
+					//om det är fel men felmeddelandet visas redan
+				} else if (!this.checkValidity()){
+					return;
+				} else {
+					this.classList.remove('has-error');
+					$(this.parentElement).find('.invalid-format').remove();
 
-			} else {
-				this.classList.remove('has-error');
-				$(this.parentElement).find('.invalid-format').remove();
-
-			}
-		});
+				}
+			});
+		}
 	}
+
 
 
 	//CSS via jQuery eftersom det inte fungerar via vanlig CSS fil just nu 
@@ -110,8 +115,10 @@ function verifyFirstInput() {
 	var night_no = $target.data('night-no'); //gets the nightNr
 	var $parent_div = $target.closest('.sleep-diary');
 	var firstInput = get_night_element($parent_div, 'bedTimeDay', night_no).val();
+	var secondInput = get_night_element($parent_div, 'sleepTimeDay', night_no).val();
 	if (firstInput == "") {
 		alert("Börja fylla i formuläret ovanifrån!");
+		$(secondInput).val('');
 	}
 }
 function verifySecondInput() {
@@ -119,8 +126,10 @@ function verifySecondInput() {
 	var night_no = $target.data('night-no'); //gets the nightNr
 	var $parent_div = $target.closest('.sleep-diary');
 	var secondInput = get_night_element($parent_div, 'sleepTimeDay', night_no).val();
+	var thirdInput = get_night_element($parent_div, 'wakeTimeDay', night_no).val();
 	if (secondInput == "") {
 		alert("Börja fylla i formuläret ovanifrån!");
+		$(thirdInput).val('');
 	}
 }
 function verifyThirdInput() {
@@ -128,16 +137,16 @@ function verifyThirdInput() {
 	var night_no = $target.data('night-no'); //gets the nightNr
 	var $parent_div = $target.closest('.sleep-diary');
 	var thirdInput = get_night_element($parent_div, 'wakeTimeDay', night_no).val();
+	var lastInput = get_night_element($parent_div, 'upTimeDay', night_no).val();
 	if (thirdInput == "") {
 		alert("Börja fylla i formuläret ovanifrån!");
+		$(lastInput).val('');
 	}
 }
 
 function checkingValidationNew($parent_div, night_no, totalBedTimeMin, totalSleepTime, totalSleepTimeMin, sleepEfficacy, totalBedTime) {
-	console.log("anropar CheckingValidity funktionen!");
 
-	//maxValue på upTimeDay
-	// skapa ett nytt datum för att skapa maxvärde på input
+	//maxValue på upTimeDay skapa ett nytt datum för att skapa maxvärde på input
 	var bedTime = new Date();
 	// sätt timmarna och minutrarna till det som skrevs in på "När gick du och la dig frågan"
 	var hours = separateHours(get_night_element($parent_div, 'bedTimeDay', night_no).val());
@@ -153,7 +162,6 @@ function checkingValidationNew($parent_div, night_no, totalBedTimeMin, totalSlee
 	var minMinForUpTime = separateMin(get_night_element($parent_div, 'wakeTimeDay', night_no).val());
 	var minValueForUpTime = fixSyntaxMinValue(minMinForUpTime, minHoursForUpTime);
 	get_night_element($parent_div, 'upTimeDay', night_no).attr({ "min": minValueForUpTime, "max": maxValueForUpTime });
-
 
 	//maxValue på #wakeTimeDay
 	//borde vara minst samma som sleepTimeDay
