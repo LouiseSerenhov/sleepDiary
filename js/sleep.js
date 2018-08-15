@@ -115,10 +115,10 @@ function verifyFirstInput() {
 	var night_no = $target.data('night-no'); //gets the nightNr
 	var $parent_div = $target.closest('.sleep-diary');
 	var firstInput = get_night_element($parent_div, 'bedTimeDay', night_no).val();
-	var secondInput = get_night_element($parent_div, 'sleepTimeDay', night_no).val();
+	var secondInput = get_night_element($parent_div, 'sleepTimeDay', night_no);
 	if (firstInput == "") {
 		alert("Börja fylla i formuläret ovanifrån!");
-		$(secondInput).val('--:--');
+		$(secondInput).val("");
 	}
 }
 function verifySecondInput() {
@@ -126,10 +126,10 @@ function verifySecondInput() {
 	var night_no = $target.data('night-no'); //gets the nightNr
 	var $parent_div = $target.closest('.sleep-diary');
 	var secondInput = get_night_element($parent_div, 'sleepTimeDay', night_no).val();
-	var thirdInput = get_night_element($parent_div, 'wakeTimeDay', night_no).val();
+	var thirdInput = get_night_element($parent_div, 'wakeTimeDay', night_no);
 	if (secondInput == "") {
 		alert("Börja fylla i formuläret ovanifrån!");
-		$(thirdInput).val('');
+		$(thirdInput).val("");
 	}
 }
 function verifyThirdInput() {
@@ -137,10 +137,10 @@ function verifyThirdInput() {
 	var night_no = $target.data('night-no'); //gets the nightNr
 	var $parent_div = $target.closest('.sleep-diary');
 	var thirdInput = get_night_element($parent_div, 'wakeTimeDay', night_no).val();
-	var lastInput = get_night_element($parent_div, 'upTimeDay', night_no).val();
+	var lastInput = get_night_element($parent_div, 'upTimeDay', night_no);
 	if (thirdInput == "") {
 		alert("Börja fylla i formuläret ovanifrån!");
-		$(lastInput).val('');
+		$(lastInput).val("");
 	}
 }
 
