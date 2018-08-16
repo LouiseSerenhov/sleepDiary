@@ -7,16 +7,12 @@ $(document).ready(function () {
 			inputs[i].addEventListener('blur', function () {
 				//om vallidity är fel + den har inte "has-error" klass
 				if (!this.checkValidity()) {
-					console.log("Kommer HIT");
-					if ($(this.classList.contains("has-error"))) {
-						return;
-					} else {
-						console.log("Kommer till DET ÄR FEL OCG FINNS INGET ERROR")
-						var wrongSyntaxDiv = $('<div class="invalid-format errorMessage">Felaktigt format. Var vänlig skriv in med formatet siffra:siffra (se exmeplen till vänster) samt inom vanligt tidsspann.  </div>');
-						this.classList.add('has-error');
-						$(wrongSyntaxDiv).insertAfter($(this));
-						//om det är fel men felmeddelandet visas redan
-					}
+
+					console.log("Kommer till DET ÄR FEL OCG FINNS INGET ERROR")
+					var wrongSyntaxDiv = $('<div class="invalid-format errorMessage">Felaktigt format. Var vänlig skriv in med formatet siffra:siffra (se exmeplen till vänster) samt inom vanligt tidsspann.  </div>');
+					this.classList.add('has-error');
+					$(wrongSyntaxDiv).insertAfter($(this));
+					//om det är fel men felmeddelandet visas redan
 				} else {
 					this.classList.remove('has-error');
 					$(this.parentElement).find('.invalid-format').remove();
