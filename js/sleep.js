@@ -7,7 +7,9 @@ $(document).ready(function () {
 			inputs[i].addEventListener('blur', function () {
 				//om vallidity är fel + den har inte "has-error" klass
 				if (!this.checkValidity()) {
-
+					if (this.classList.contains("has-error")){
+						return;
+					}
 					console.log("Kommer till DET ÄR FEL OCG FINNS INGET ERROR")
 					var wrongSyntaxDiv = $('<div class="invalid-format errorMessage">Felaktigt format. Var vänlig skriv in med formatet siffra:siffra (se exmeplen till vänster) samt inom vanligt tidsspann.  </div>');
 					this.classList.add('has-error');
