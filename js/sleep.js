@@ -6,15 +6,16 @@ $(document).ready(function () {
 		for (var i = 0; i < inputs.length; i++) {
 			inputs[i].addEventListener('blur', function () {
 				//om vallidity är fel + den har inte "has-error" klass
-				if (!this.checkValidity() && $(!this.classList.contains("has-error"))) {
-					console.log("Kommer till DET ÄR FEL OCG FINNS INGET ERROR")
-					var wrongSyntaxDiv = $('<div class="invalid-format errorMessage">Felaktigt format. Var vänlig skriv in med formatet siffra:siffra (se exmeplen till vänster) samt inom vanligt tidsspann.  </div>');
-					this.classList.add('has-error');
-					$(wrongSyntaxDiv).insertAfter($(this));
-					//om det är fel men felmeddelandet visas redan
-				} else if (!this.checkValidity()) {
-					console.log("kommer till att DET ÄR FEL MEN DET VISAS REDAN ERROR");
-					return;
+				if (!this.checkValidity()) {
+					if ($(this.classList.contains("has-error"))) {
+						return;
+					} else {
+						console.log("Kommer till DET ÄR FEL OCG FINNS INGET ERROR")
+						var wrongSyntaxDiv = $('<div class="invalid-format errorMessage">Felaktigt format. Var vänlig skriv in med formatet siffra:siffra (se exmeplen till vänster) samt inom vanligt tidsspann.  </div>');
+						this.classList.add('has-error');
+						$(wrongSyntaxDiv).insertAfter($(this));
+						//om det är fel men felmeddelandet visas redan
+					}
 				} else {
 					this.classList.remove('has-error');
 					$(this.parentElement).find('.invalid-format').remove();
@@ -116,8 +117,8 @@ function calculateNight() {
 function messageOutput() {
 	$(".dialog").dialog({
 		draggable: false
-	  });
-	}
+	});
+}
 
 function verifyFirstInput() {
 	var $target = $(event.target); //html elementet input lådan
@@ -125,7 +126,7 @@ function verifyFirstInput() {
 	var $parent_div = $target.closest('.sleep-diary');
 	var firstInput = get_night_element($parent_div, 'bedTimeDay', night_no).val();
 	var secondInput = get_night_element($parent_div, 'sleepTimeDay', night_no);
-	
+
 	if (firstInput == "") {
 		messageOutput();
 		$(secondInput).val("");
