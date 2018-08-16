@@ -11,7 +11,7 @@ $(document).ready(function () {
 					this.classList.add('has-error');
 					$(wrongSyntaxDiv).insertAfter($(this));
 					//om det är fel men felmeddelandet visas redan
-				} else if (!this.checkValidity()){
+				} else if (!this.checkValidity()) {
 					return;
 				} else {
 					this.classList.remove('has-error');
@@ -110,17 +110,27 @@ function calculateNight() {
 	}
 }
 
+
+function messageOutput() {
+	$(".dialog").dialog({
+		draggable: false
+	  });
+	}
+
 function verifyFirstInput() {
 	var $target = $(event.target); //html elementet input lådan
 	var night_no = $target.data('night-no'); //gets the nightNr
 	var $parent_div = $target.closest('.sleep-diary');
 	var firstInput = get_night_element($parent_div, 'bedTimeDay', night_no).val();
 	var secondInput = get_night_element($parent_div, 'sleepTimeDay', night_no);
+	
 	if (firstInput == "") {
-		alert("Börja fylla i formuläret ovanifrån!");
+		messageOutput();
 		$(secondInput).val("");
 	}
 }
+
+
 function verifySecondInput() {
 	var $target = $(event.target); //html elementet input lådan
 	var night_no = $target.data('night-no'); //gets the nightNr
