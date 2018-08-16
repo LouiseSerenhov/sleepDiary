@@ -7,6 +7,7 @@ $(document).ready(function () {
 			inputs[i].addEventListener('blur', function () {
 				//om vallidity är fel + den har inte "has-error" klass
 				if (!this.checkValidity()) {
+					console.log("Kommer HIT");
 					if ($(this.classList.contains("has-error"))) {
 						return;
 					} else {
