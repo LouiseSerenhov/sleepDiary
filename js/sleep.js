@@ -140,7 +140,7 @@ function verifySecondInput() {
 	var secondInput = get_night_element($parent_div, 'sleepTimeDay', night_no).val();
 	var thirdInput = get_night_element($parent_div, 'wakeTimeDay', night_no);
 	if (secondInput == "") {
-		alert("Börja fylla i formuläret ovanifrån!");
+		messageOutput();
 		$(thirdInput).val("");
 	}
 }
@@ -151,7 +151,7 @@ function verifyThirdInput() {
 	var thirdInput = get_night_element($parent_div, 'wakeTimeDay', night_no).val();
 	var lastInput = get_night_element($parent_div, 'upTimeDay', night_no);
 	if (thirdInput == "") {
-		alert("Börja fylla i formuläret ovanifrån!");
+		messageOutput();
 		$(lastInput).val("");
 	}
 }
