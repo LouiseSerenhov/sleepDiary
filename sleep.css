@@ -52,3 +52,32 @@
     border-width: 4px;
     border-color: red;
 } */
+
+@media (min-width: 980px) { 
+   table {
+    max-width: 134px !important;
+    float: left;
+
+   }
+
+   .diarydiv {
+    width: 130em;
+    overflow-x: auto;
+    /* white-space: nowrap; */
+   }
+
+
+   .matchStyleComputor {
+       height: 54px;
+   }
+
+   .fixPadComputer {
+    padding-bottom: 14px !important;
+   }
+
+   .hideOnComputer {
+       display: none;
+   }
+
+ 
+}

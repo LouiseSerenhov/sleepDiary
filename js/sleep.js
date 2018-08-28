@@ -156,8 +156,11 @@ function checkingValidation($parent_div, night_no, totalBedTimeMin, totalSleepTi
 	} else if (totalBedTimeMin < totalSleepTimeMin) {
 		$("#errorTimeDay" + night_no).show();
 		clearOutputField($parent_div, night_no);
-	} else {
-		// input is fine 
+	} else if (totalBedTimeMin < 0){
+		clearOutputField($parent_div, night_no);
+	} else if (totalSleepTimeMin < 0) {
+		clearOutputField($parent_div, night_no);
+	} else {// input is fine 
 		clearErrorMessages(night_no);
 		showResults($parent_div, night_no, totalSleepTime, sleepEfficacy, totalBedTime);
 	}
