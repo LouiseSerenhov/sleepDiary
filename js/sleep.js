@@ -148,20 +148,20 @@ function checkingValidation($parent_div, night_no, totalBedTimeMin, totalSleepTi
 	get_night_element($parent_div, 'wakeTimeDay', night_no).attr({ "min": minValueForWakeTime, "max": maxValueForWakeTime });
 
 	if (totalBedTimeMin > 1320) {
-		$("#errorUpTimeDay" + night_no).show();
+		$($parent_div).find("#errorUpTimeDay" + night_no).show();
 		clearOutputField($parent_div, night_no);
 	} else if (totalSleepTimeMin > 1320) {
-		$("#errorWakeTimeDay" + night_no).show();
+		$($parent_div).find("#errorWakeTimeDay" + night_no).show();
 		clearOutputField($parent_div, night_no);
 	} else if (totalBedTimeMin < totalSleepTimeMin) {
-		$("#errorTimeDay" + night_no).show();
+		$($parent_div).find("#errorTimeDay" + night_no).show();
 		clearOutputField($parent_div, night_no);
 	} else if (totalBedTimeMin < 0){
 		clearOutputField($parent_div, night_no);
 	} else if (totalSleepTimeMin < 0) {
 		clearOutputField($parent_div, night_no);
-	} else {// input is fine 
-		clearErrorMessages(night_no);
+	} else { // input is fine 
+		clearErrorMessages($parent_div, night_no);
 		showResults($parent_div, night_no, totalSleepTime, sleepEfficacy, totalBedTime);
 	}
 	// Lägg till Om skillnad mellan bedTimeMin och sleepTimeMin är mer än 900min (15h) --> ge meddelande om att det ej är rimligt

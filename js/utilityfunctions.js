@@ -34,10 +34,11 @@ function showResults($parent_div, night_no, totalSleepTime, sleepEfficacy, total
 	get_night_element($parent_div, 'outputbedtimeDay', night_no).val(totalBedTime);
 }
 
-function clearErrorMessages(night_no) {
-	$("#errorUpTimeDay" + night_no).hide();
-	$("#errorWakeTimeDay" + night_no).hide();
-	$("#errorTimeDay" + night_no).hide();
+function clearErrorMessages($parent_div, night_no) {
+	$($parent_div).find("#errorTimeDay" + night_no).hide();
+	$($parent_div).find("#errorWakeTimeDay" + night_no).hide();
+	$($parent_div).find("#errorUpTimeDay" + night_no).hide();
+	
 }
 
 function calculateTotalBedTime(bedTime, upTime) {
