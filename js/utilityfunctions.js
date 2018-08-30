@@ -247,6 +247,12 @@ function messageOutput() {
 	});
 }
 
+function messageOutput2() {
+	$(".dialog2").dialog({
+		draggable: false
+	});
+}
+
 function verifyFirstInput() {
 	var $target = $(event.target); //html elementet input lådan
 	var night_no = $target.data('night-no'); //gets the nightNr

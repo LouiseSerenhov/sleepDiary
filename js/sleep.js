@@ -147,7 +147,7 @@ function checkingValidation($parent_div, night_no, totalBedTimeMin, totalSleepTi
 		$($parent_div).find("#errorWakeTimeDay" + night_no).show();
 		clearOutputField($parent_div, night_no);
 	} else if (totalBedTimeMin < totalSleepTimeMin) {
-		$($parent_div).find("#errorTimeDay" + night_no).show();
+		messageOutput2();
 		clearOutputField($parent_div, night_no);
 	} else if (totalBedTimeMin < 0){
 		clearOutputField($parent_div, night_no);
