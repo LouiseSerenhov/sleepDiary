@@ -47,12 +47,6 @@ $(document).ready(function () {
 		color: '495057',
 		border: '1px solid #ced4da',
 	});
-
-	$('.addInputButton').hover(function () {
-		$(this).css({
-			cursor: 'pointer',
-		});
-	});
 	$('.errorMessage').css({ //funkar ej
 		'border-width': '4px',
 		'border-color:': 'red',
@@ -97,25 +91,24 @@ function calculateNight() {
 	}
 }
 
-function addInputfield() {
-	var $target = $(event.target);
-	var night_no = $target.data('night-no');
-	var $parent_div = $target.closest('.sleep-diary');
-	console.log('kör addInputFiled', night_no);
-	var $currentInputContainer = get_night_element($parent_div, 'addInputContainer', night_no);
-	var input_count = $currentInputContainer.find('.AwakeAtNight').length;
-	var $input_element = $('<input type="time" class="form-control form-control-sm AwakeAtNight">');
-	$input_element.data('night-no', night_no);
-	$input_element.prop('name', 'awakeTimeAtNight' + night_no + '_' + (input_count + 1));
-	$input_element.on('change', calculateNight);
-	$currentInputContainer.append($input_element);
-}
+// function addInputfield() {
+// 	var $target = $(event.target);
+// 	var night_no = $target.data('night-no');
+// 	var $parent_div = $target.closest('.sleep-diary');
+// 	console.log('kör addInputFiled', night_no);
+// 	var $currentInputContainer = get_night_element($parent_div, 'addInputContainer', night_no);
+// 	var input_count = $currentInputContainer.find('.AwakeAtNight').length;
+// 	var $input_element = $('<input type="time" class="form-control form-control-sm AwakeAtNight">');
+// 	$input_element.data('night-no', night_no);
+// 	$input_element.prop('name', 'awakeTimeAtNight' + night_no + '_' + (input_count + 1));
+// 	$input_element.on('change', calculateNight);
+// 	$currentInputContainer.append($input_element);
+// }
 
 function checkingValidation($parent_div, night_no, totalBedTimeMin, totalSleepTime, totalSleepTimeMin, sleepEfficacy, totalBedTime) {
 
 	//maxValue på upTimeday
 	var bedTime = new Date();
-	// sätt timmarna och minutrarna till det som skrevs in på "När gick du och la dig frågan"
 	var hours = separateHours(get_night_element($parent_div, 'bedTimeDay', night_no).val());
 	bedTime.setHours(hours)
 	var minutes = separateMin(get_night_element($parent_div, 'bedTimeDay', night_no).val());
