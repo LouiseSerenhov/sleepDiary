@@ -27,6 +27,8 @@
             padding-bottom: 3px;
         }
 
+
+/* IE10+ */
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
     .iePadding1 {
         padding-bottom: 6px;
@@ -36,6 +38,25 @@
     }
    }
 
+ /* IE6,7,9,10 */
+ @media screen and (min-width: 640px), screen\9 {
+    .iePadding1 {
+        padding-bottom: 6px;
+    }
+    h2 {
+        color: blue !important; 
+    }
+ }
+
+ /* IE6,7,8 */
+ @media \0screen\,screen\9 {
+    .iePadding1 {
+        padding-bottom: 6px;
+    }
+    h2 {
+        color: blue !important; 
+    }
+ }
 
         @media (min-width: 980px) {
             table {
