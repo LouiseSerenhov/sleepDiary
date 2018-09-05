@@ -12,6 +12,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+   
     <!-- CSS via HTML eftersom det inte fungerar via vanlig CSS fil just nu (ful lösning jag vet)  -->
     <style>
         .has-error {
@@ -62,6 +63,41 @@
    
  }
 
+/* CSS for Safari sätt min-width: 456px på table */
+_::-webkit-full-page-media, _:future, :root .safari_only {
+    min-width: 456px !important;
+}
+
+_::-webkit-full-page-media, _:future, :root .iePadding1 {
+    padding-bottom: 4px !important;
+}
+
+_::-webkit-full-page-media, _:future, :root .iePadding2 {
+    padding-bottom: 3px !important;
+}
+
+_::-webkit-full-page-media, _:future, :root .safariPadding2 {
+    padding-bottom: 19px !important;
+}
+
+_::-webkit-full-page-media, _:future, :root .safariPadding3 {
+    padding-bottom: 8px !important;
+}
+
+_::-webkit-full-page-media, _:future, :root .iePadding3 {
+    padding-bottom: 6px !important;
+}
+
+
+_::-webkit-full-page-media, _:future, :root .iePadding4 {
+    padding-bottom: 7px !important;
+}
+
+_::-webkit-full-page-media, _:future, :root .safariPadding1 {
+    height: 56px !important;
+}
+
+
 /* CSS for mobile  */
         @media (min-width: 980px) {
             table {
@@ -104,7 +140,7 @@
 
                 <form name="sleepdiary" class="text-center">
                     <div class="table-responsive{-sm|-md|-lg|-xl} diarydiv">
-                        <table class="table table-bordered table-hover table-sm">
+                        <table class="table table-bordered table-hover table-sm safari_only">
                             <thead class="thead-light">
                                 <tr class="matchStyleComputor">
                                     <th scope="col" class="questionsColumn">Första morgonens datum:</th>
@@ -323,7 +359,7 @@
 
                         <table class="table table-bordered table-hover table-sm smallTable">
                             <thead class="thead-light">
-                                <tr class="matchStyleComputor">
+                                <tr class="safariPadding1 matchStyleComputor">
                                     <th scope="col" class="questionsColumn hideOnComputer">Första morgonens datum:</th>
                                     <th scope="col" class="hideOnComputer">
                                         <i>Exempel</i>
@@ -378,7 +414,7 @@
                                         <input type="text" class="form-control form-control-sm example" id="tryToSleepExample" name="tryToSleepExample" value="23:00"
                                             disabled>
                                     </td>
-                                    <td style="padding-bottom: 15px;">
+                                    <td class = "safariPadding2" style="padding-bottom: 15px;">
                                         <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm" id="tryToSleepDay2"
                                             name="tryToSleepDay2" tabindex="15">
                                     </td>
@@ -408,7 +444,7 @@
                                         </div>
                                     </td>
 
-                                    <td id="night2">
+                                    <td class = "safariPadding3" id="night2">
                                         <div class="addInputContainer" data-night-no="2">
                                             <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm AwakeAtNight" data-night-no="2"
                                                 name="awakeTimeAtNight2_1" tabindex="17" onchange="calculateNight()" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 58'>
@@ -523,7 +559,7 @@
 
                         <table class="table table-bordered table-hover table-sm smallTable">
                             <thead class="thead-light">
-                                <tr class="matchStyleComputor">
+                                <tr class="matchStyleComputor safariPadding1">
                                     <th scope="col" class="questionsColumn hideOnComputer">Första morgonens datum:</th>
                                     <th scope="col" class="hideOnComputer">
                                         <i>Exempel</i>
@@ -587,7 +623,7 @@
                                         <input type="text" class="form-control form-control-sm example" id="tryToSleepExample" name="tryToSleepExample" value="23:00"
                                             disabled>
                                     </td>
-                                    <td style="padding-bottom: 15px;">
+                                    <td class = "safariPadding2" style="padding-bottom: 15px;">
                                         <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm" id="tryToSleepDay3"
                                             name="tryToSleepDay3" tabindex="25">
                                     </td>
@@ -621,7 +657,7 @@
                                     </td>
 
 
-                                    <td id="night3">
+                                    <td class = "safariPadding3" id="night3">
                                         <div class="addInputContainer" data-night-no="3">
                                             <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm AwakeAtNight" data-night-no="3"
                                                 name="awakeTimeAtNight3_1" tabindex="27" onchange="calculateNight()" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 58'>
@@ -739,7 +775,7 @@
 
                         <table class="table table-bordered table-hover table-sm smallTable">
                             <thead class="thead-light">
-                                <tr class="matchStyleComputor">
+                                <tr class="matchStyleComputor safariPadding1">
                                     <th scope="col" class="questionsColumn hideOnComputer">Första morgonens datum:</th>
                                     <th scope="col" class="hideOnComputer">
                                         <i>Exempel</i>
@@ -803,7 +839,7 @@
                                         <input type="text" class="form-control form-control-sm example" id="tryToSleepExample" name="tryToSleepExample" value="23:00"
                                             disabled>
                                     </td>
-                                    <td style="padding-bottom: 15px;">
+                                    <td class = "safariPadding2" style="padding-bottom: 15px;">
                                         <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm" id="tryToSleepDay4"
                                             name="tryToSleepDay4" tabindex="35">
                                     </td>
@@ -837,7 +873,7 @@
                                     </td>
 
 
-                                    <td id="night3">
+                                    <td class = "safariPadding3" id="night4">
                                         <div class="addInputContainer" data-night-no="4">
                                             <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm AwakeAtNight" data-night-no="4"
                                                 name="awakeTimeAtNight4_1" tabindex="37" onchange="calculateNight()" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 58'>
@@ -954,7 +990,7 @@
 
                         <table class="table table-bordered table-hover table-sm smallTable">
                             <thead class="thead-light">
-                                <tr class="matchStyleComputor">
+                                <tr class="matchStyleComputor safariPadding1">
                                     <th scope="col" class="questionsColumn hideOnComputer">Första morgonens datum:</th>
                                     <th scope="col" class="hideOnComputer">
                                         <i>Exempel</i>
@@ -1018,7 +1054,7 @@
                                         <input type="text" class="form-control form-control-sm example" id="tryToSleepExample" name="tryToSleepExample" value="23:00"
                                             disabled>
                                     </td>
-                                    <td style="padding-bottom: 15px;">
+                                    <td class = "safariPadding2" style="padding-bottom: 15px;">
                                         <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm" id="tryToSleepDay4"
                                             name="tryToSleepDay4" tabindex="35">
                                     </td>
@@ -1052,7 +1088,7 @@
                                     </td>
 
 
-                                    <td id="night5">
+                                    <td class = "safariPadding3" id="night5">
                                         <div class="addInputContainer" data-night-no="5">
                                             <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm AwakeAtNight" data-night-no="5"
                                                 name="awakeTimeAtNight5_1" tabindex="47" onchange="calculateNight()" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 58'>
@@ -1170,7 +1206,7 @@
 
                         <table class="table table-bordered table-hover table-sm smallTable">
                             <thead class="thead-light">
-                                <tr class="matchStyleComputor">
+                                <tr class="matchStyleComputor safariPadding1">
                                     <th scope="col" class="questionsColumn hideOnComputer">Första morgonens datum:</th>
                                     <th scope="col" class="hideOnComputer">
                                         <i>Exempel</i>
@@ -1234,7 +1270,7 @@
                                         <input type="text" class="form-control form-control-sm example" id="tryToSleepExample" name="tryToSleepExample" value="23:00"
                                             disabled>
                                     </td>
-                                    <td style="padding-bottom: 15px;">
+                                    <td class = "safariPadding2" style="padding-bottom: 15px;">
                                         <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm" id="tryToSleepDay6"
                                             name="tryToSleepDay4" tabindex="55">
                                     </td>
@@ -1268,7 +1304,7 @@
                                     </td>
 
 
-                                    <td id="night6">
+                                    <td class = "safariPadding3" id="night6">
                                         <div class="addInputContainer" data-night-no="6">
                                             <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm AwakeAtNight" data-night-no="6"
                                                 name="awakeTimeAtNight5_1" tabindex="57" onchange="calculateNight()" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 58'>
@@ -1386,7 +1422,7 @@
 
                         <table class="table table-bordered table-hover table-sm smallTable">
                             <thead class="thead-light">
-                                <tr class="matchStyleComputor">
+                                <tr class="matchStyleComputor safariPadding1">
                                     <th scope="col" class="questionsColumn hideOnComputer">Första morgonens datum:</th>
                                     <th scope="col" class="hideOnComputer">
                                         <i>Exempel</i>
@@ -1450,7 +1486,7 @@
                                         <input type="text" class="form-control form-control-sm example" id="tryToSleepExample" name="tryToSleepExample" value="23:00"
                                             disabled>
                                     </td>
-                                    <td style="padding-bottom: 15px;">
+                                    <td class = "safariPadding2" style="padding-bottom: 15px;">
                                         <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm" id="tryToSleepDay7"
                                             name="tryToSleepDay7" tabindex="65">
                                     </td>
@@ -1484,7 +1520,7 @@
                                     </td>
 
 
-                                    <td id="night7">
+                                    <td class = "safariPadding3" id="night7">
                                         <div class="addInputContainer" data-night-no="7">
                                             <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm AwakeAtNight" data-night-no="7"
                                                 name="awakeTimeAtNight5_1" tabindex="67" onchange="calculateNight()" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 58'>
