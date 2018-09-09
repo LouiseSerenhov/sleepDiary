@@ -73,7 +73,7 @@ function calculateNight() {
 	var totalBedTimeMin = calculateTimeDiffMin(bedTime, upTime);
 	var totalSleepTimeMin = calculateTotalSleepTimeMin(bedTime, upTime, sleepTime, wakeTime, awakeTimeAtNight);
 	var sleepEfficacy = Math.round((totalSleepTimeMin / totalBedTimeMin) * 100);
-	if (totalSleepTimeMin) {
+	if (totalSleepTimeMin != undefined) {
 		if (totalSleepTimeMin === 0){
 			totalSleepTime = 0 + 'tim ' + 0 + 'min';
 		} else {
