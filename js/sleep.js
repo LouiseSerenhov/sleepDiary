@@ -6,7 +6,7 @@ $(document).ready(function () {
 			inputs[i].addEventListener('blur', function () {
 				//om vallidity är fel + den har inte "has-error" klass
 				if (!this.checkValidity()) {
-					if (this.classList.contains("has-error")){
+					if (this.classList.contains("has-error")) {
 						return;
 					}
 					console.log("Kommer till DET ÄR FEL OCG FINNS INGET ERROR")
@@ -55,107 +55,107 @@ $(document).ready(function () {
 
 
 //JAVASCRIPT KODEN 
-
-
 function calculateNight() {
-	var $target = $(event.target); //html elementet input lådan
-	var night_no = $target.data('night-no'); //gets the nightNr
-	var $parent_div = $target.closest('.sleep-diary');
-	console.log('Anropar nya nya funktionen calculateTotalSleepTimeForNight' + night_no);
-	var bedTime = get_night_element($parent_div, 'bedTimeDay', night_no).val();
-	var upTime = get_night_element($parent_div, 'upTimeDay', night_no).val();
-	var sleepTime = get_night_element($parent_div, 'sleepTimeDay', night_no).val();
-	var wakeTime = get_night_element($parent_div, 'wakeTimeDay', night_no).val();
-	var $AwakeTimeAtNights = get_night_element($parent_div, 'addInputContainer', night_no).find('.AwakeAtNight');
-	awakeTimeAtNight = sumAwakeTimeAtNightNew($AwakeTimeAtNights);
+	console.log('Anropar funktionen calculateNight' + nightNr);
 	var totalSleepHours;
 	var totalSleepMin;
 	var totalSleepTime;
+	var $target = $(event.target); //html elementet input lådan
+	var nightNr = $target.data('nightNo'); //gets the nightNr
+	var $parentDiv = $target.closest('.sleep-diary');
+	var bedTime = get_night_element($parentDiv, 'bedTimeDay', nightNr).val();
+	var upTime = get_night_element($parentDiv, 'upTimeDay', nightNr).val();
+	var sleepTime = get_night_element($parentDiv, 'sleepTimeDay', nightNr).val();
+	var wakeTime = get_night_element($parentDiv, 'wakeTimeDay', nightNr).val();
+	var $AwakeTimeAtNights = get_night_element($parentDiv, 'addInputContainer', nightNr).find('.AwakeAtNight');
+	awakeTimeAtNight = sumAwakeTimeAtNightNew($AwakeTimeAtNights);
 	var totalBedTime = calculateTotalBedTime(bedTime, upTime);
 	var totalBedTimeMin = calculateTimeDiffMin(bedTime, upTime);
 	var totalSleepTimeMin = calculateTotalSleepTimeMin(bedTime, upTime, sleepTime, wakeTime, awakeTimeAtNight);
 	var sleepEfficacy = Math.round((totalSleepTimeMin / totalBedTimeMin) * 100);
 	if (totalSleepTimeMin) {
+		if (totalSleepTimeMin === 0){
+			totalSleepTime = 0 + 'tim ' + 0 + 'min';
+		} else {
 		totalSleepMin = totalSleepTimeMin % 60;
 		totalSleepHours = (totalSleepTimeMin - totalSleepMin) / 60;
 		totalSleepTime = totalSleepHours + 'tim ' + totalSleepMin + 'min';
-		checkingValidation(
-			$parent_div,
-			night_no,
+		}
+		var night = {
+			$parentDiv,
+			nightNr,
 			totalBedTimeMin,
 			totalSleepTime,
 			totalSleepTimeMin,
 			sleepEfficacy,
-			totalBedTime);
-
+			totalBedTime
+		}
+		checkingValidation(night);
 	}
 }
 
-// function addInputfield() {
-// 	var $target = $(event.target);
-// 	var night_no = $target.data('night-no');
-// 	var $parent_div = $target.closest('.sleep-diary');
-// 	console.log('kör addInputFiled', night_no);
-// 	var $currentInputContainer = get_night_element($parent_div, 'addInputContainer', night_no);
-// 	var input_count = $currentInputContainer.find('.AwakeAtNight').length;
-// 	var $input_element = $('<input type="time" class="form-control form-control-sm AwakeAtNight">');
-// 	$input_element.data('night-no', night_no);
-// 	$input_element.prop('name', 'awakeTimeAtNight' + night_no + '_' + (input_count + 1));
-// 	$input_element.on('change', calculateNight);
-// 	$currentInputContainer.append($input_element);
-// }
+// Daniels anteckning
+// Verb-namngivning, -> checkValidation
+function checkingValidation(night) {
 
-function checkingValidation($parent_div, night_no, totalBedTimeMin, totalSleepTime, totalSleepTimeMin, sleepEfficacy, totalBedTime) {
+	// //maxValue på upTimeday
+	// var bedTime = new Date();
 
-	//maxValue på upTimeday
-	var bedTime = new Date();
-	var hours = separateHours(get_night_element($parent_div, 'bedTimeDay', night_no).val());
-	bedTime.setHours(hours)
-	var minutes = separateMin(get_night_element($parent_div, 'bedTimeDay', night_no).val());
-	bedTime.setMinutes(minutes)
-	// lägg till 23h timmar från tiden från "När gick du och la dig", om man kör 22 kmr aldrig fina felmedelandet upp
-	bedTime.setHours(+hours + 23);
-	var maxMinForUpTime = bedTime.getMinutes();
-	var maxHoursForUpTime = bedTime.getHours();
-	var maxValueForUpTime = fixSyntaxMaxValue(maxMinForUpTime, maxHoursForUpTime);
-	var minHoursForUpTime = separateHours(get_night_element($parent_div, 'wakeTimeDay', night_no).val());
-	var minMinForUpTime = separateMin(get_night_element($parent_div, 'wakeTimeDay', night_no).val());
-	var minValueForUpTime = fixSyntaxMinValue(minMinForUpTime, minHoursForUpTime);
-	get_night_element($parent_div, 'upTimeDay', night_no).attr({ "min": minValueForUpTime, "max": maxValueForUpTime });
+	// // Daniels anteckning
+	// // För läslighetens skull, fundera på att lyfta ut get_night_element-anropet och spara i en variabel som skickas med som argument
+	// // i nästa funktion istället
+	// var hours = separateHours(get_night_element(night.$parentDiv, 'bedTimeDay', night.nightNr).val());
+	// bedTime.setHours(hours)
+	// // var minutes = separateMin(get_night_element(night.$parentDiv, 'bedTimeDay', night.nightNr).val());
+	// // bedTime.setMinutes(minutes)
+	// // lägg till 23h timmar från tiden från "När gick du och la dig", om man kör 22 kmr aldrig fina felmedelandet upp
+	// bedTime.setHours(+hours + 23);
+	// // var maxMinForUpTime = bedTime.getMinutes();
+	// var maxHoursForUpTime = bedTime.getHours();
+	// var maxValueForUpTime = fixSyntaxMaxValue(maxMinForUpTime, maxHoursForUpTime);
+	// var minHoursForUpTime = separateHours(get_night_element(night.$parentDiv, 'wakeTimeDay', night.nightNr).val());
+	// // var minMinForUpTime = separateMin(get_night_element(night.$parentDiv, 'wakeTimeDay', night.nightNr).val());
+	// var minValueForUpTime = fixSyntaxMinValue(minMinForUpTime, minHoursForUpTime);
+	// get_night_element(night.$parentDiv, 'upTimeDay', night.nightNr).attr({ "min": minValueForUpTime, "max": maxValueForUpTime });
 
-	//maxValue på wakeTimeDay
-	var minHoursForWakeTime = separateHours(get_night_element($parent_div, 'sleepTimeDay', night_no).val());
-	var minMinForWakeTime = separateMin(get_night_element($parent_div, 'sleepTimeDay', night_no).val());
-	var minValueForWakeTime = fixSyntaxMinValue(minMinForWakeTime, minHoursForWakeTime);
-	var sleepTime = new Date();
-	// sätt timmarna och minutrarna till det som skrevs in på "När gick du och la dig frågan"
-	var hours = separateHours(get_night_element($parent_div, 'sleepTimeDay', night_no).val());
-	sleepTime.setHours(hours)
-	var minutes = separateMin(get_night_element($parent_div, 'sleepTimeDay', night_no).val());
-	sleepTime.setMinutes(minutes)
-	// lägg till 23h timmar från tiden från "När gick du och la dig", om man kör 22 kmr aldrig fina felmedelandet upp
-	sleepTime.setHours(+hours + 23);
-	var maxMinForWakeTime = sleepTime.getMinutes();
-	var maxHoursForWakeTime = sleepTime.getHours();
-	var maxValueForWakeTime = fixSyntaxMaxValue(maxMinForWakeTime, maxHoursForWakeTime);
-	get_night_element($parent_div, 'wakeTimeDay', night_no).attr({ "min": minValueForWakeTime, "max": maxValueForWakeTime });
+	// // maxValue på wakeTimeDay
+	// var minHoursForWakeTime = separateHours(get_night_element(night.$parentDiv, 'sleepTimeDay', night.nightNr).val());
+	// var minMinForWakeTime = separateMin(get_night_element(night.$parentDiv, 'sleepTimeDay', night.nightNr).val());
+	// var minValueForWakeTime = fixSyntaxMinValue(minMinForWakeTime, minHoursForWakeTime);
+	// var sleepTime = new Date();
 
-	if (totalBedTimeMin > 1320) {
-		$($parent_div).find("#errorUpTimeDay" + night_no).show();
-		clearOutputField($parent_div, night_no);
-	} else if (totalSleepTimeMin > 1320) {
-		$($parent_div).find("#errorWakeTimeDay" + night_no).show();
-		clearOutputField($parent_div, night_no);
-	} else if (totalBedTimeMin < totalSleepTimeMin) {
+	// // Daniels anteckning
+	// // Här deklareras en ny 'hours' variabel, är det samma som förra eller ska den skrivas över? Samma sak med minutes under
+	// // sätt timmarna och minutrarna till det som skrevs in på "När gick du och la dig frågan"
+	// hours = separateHours(get_night_element(night.$parentDiv, 'sleepTimeDay', night.nightNr).val());
+	// sleepTime.setHours(hours)
+	// minutes = separateMin(get_night_element(night.$parentDiv, 'sleepTimeDay', night.nightNr).val());
+	// sleepTime.setMinutes(minutes)
+	// // lägg till 23h timmar från tiden från "När gick du och la dig", om man kör 22 kmr aldrig fina felmedelandet upp
+	// sleepTime.setHours(+hours + 23);
+	// var maxMinForWakeTime = sleepTime.getMinutes();
+	// var maxHoursForWakeTime = sleepTime.getHours();
+	// var maxValueForWakeTime = fixSyntaxMaxValue(maxMinForWakeTime, maxHoursForWakeTime);
+	// get_night_element(night.$parentDiv, 'wakeTimeDay', night.nightNr).attr({ "min": minValueForWakeTime, "max": maxValueForWakeTime });
+
+	if (night.totalBedTimeMin > 1320) {
+		$(night.$parentDiv).find("#errorUpTimeDay" + night.nightNr).show();
+		clearOutputField(night.$parentDiv, night.nightNr);
+	} else if (night.totalSleepTimeMin > 1320) {
+		$(night.$parentDiv).find("#errorWakeTimeDay" + night.nightNr).show();
+		clearOutputField($parentDiv, nightNr);
+	} else if (night.totalBedTimeMin < night.totalSleepTimeMin) {
 		messageOutput2();
-		clearOutputField($parent_div, night_no);
-	} else if (totalBedTimeMin < 0){
-		clearOutputField($parent_div, night_no);
-	} else if (totalSleepTimeMin < 0) {
-		clearOutputField($parent_div, night_no);
+		clearOutputField(night.$parentDiv, night.nightNr);
+	} else if (night.totalBedTimeMin < 0) {
+		messageOutput3();
+		clearOutputField(night.$parentDiv, night.nightNr);
+	} else if (night.totalSleepTimeMin < 0) {
+		messageOutput3();
+		clearOutputField(night.$parentDiv, night.nightNr);
 	} else { // input is fine 
-		clearErrorMessages($parent_div, night_no);
-		showResults($parent_div, night_no, totalSleepTime, sleepEfficacy, totalBedTime);
+		clearErrorMessages(night.$parentDiv, night.nightNr);
+		showResults(night.$parentDiv, night.nightNr, night.totalSleepTime, night.sleepEfficacy, night.totalBedTime);
 	}
 	// Lägg till Om skillnad mellan bedTimeMin och sleepTimeMin är mer än 900min (15h) --> ge meddelande om att det ej är rimligt
 }

@@ -1,10 +1,10 @@
 //Utilityfunktioner!
 
 
-function get_night_element($parent_div, class_name, night_no) { //exempel div sleepdiary,bedTimeday, upTimeDay 
-	var search_str = '.' + class_name + '[data-night-no="' + night_no + '"]';
+function get_night_element($parentDiv, class_name, nightNr) { //exempel div sleepdiary,bedTimeday, upTimeDay 
+	var search_str = '.' + class_name + '[data-night-no="' + nightNr + '"]';
 	console.log(search_str);
-	var $elements = $parent_div.find(search_str); //hittar inputen och och lägger i en array
+	var $elements = $parentDiv.find(search_str); //hittar inputen och och lägger i en array
 	return $elements; //return input
 }
 
@@ -22,23 +22,23 @@ function sumAwakeTimeAtNightNew($AwakeTimeAtNights) {
 	return awakeTotalMin;
 }
 
-function clearOutputField($parent_div, night_no) {
-	get_night_element($parent_div, 'outputsleeptimeDay', night_no).val("-");
-	get_night_element($parent_div, 'outputsleepEfficacyDay', night_no).val('-');
-	get_night_element($parent_div, 'outputbedtimeDay', night_no).val("-");
+function clearOutputField($parentDiv, nightNr) {
+	get_night_element($parentDiv, 'outputsleeptimeDay', nightNr).val("-");
+	get_night_element($parentDiv, 'outputsleepEfficacyDay', nightNr).val('-');
+	get_night_element($parentDiv, 'outputbedtimeDay', nightNr).val("-");
 }
 
-function showResults($parent_div, night_no, totalSleepTime, sleepEfficacy, totalBedTime) {
-	get_night_element($parent_div, 'outputsleeptimeDay', night_no).val(totalSleepTime);
-	get_night_element($parent_div, 'outputsleepEfficacyDay', night_no).val(sleepEfficacy + '%');
-	get_night_element($parent_div, 'outputbedtimeDay', night_no).val(totalBedTime);
+function showResults($parentDiv, nightNr, totalSleepTime, sleepEfficacy, totalBedTime) {
+	get_night_element($parentDiv, 'outputsleeptimeDay', nightNr).val(totalSleepTime);
+	get_night_element($parentDiv, 'outputsleepEfficacyDay', nightNr).val(sleepEfficacy + '%');
+	get_night_element($parentDiv, 'outputbedtimeDay', nightNr).val(totalBedTime);
 }
 
-function clearErrorMessages($parent_div, night_no) {
-	$($parent_div).find("#errorTimeDay" + night_no).hide();
-	$($parent_div).find("#errorWakeTimeDay" + night_no).hide();
-	$($parent_div).find("#errorUpTimeDay" + night_no).hide();
-	
+function clearErrorMessages($parentDiv, nightNr) {
+	$($parentDiv).find("#errorTimeDay" + nightNr).hide();
+	$($parentDiv).find("#errorWakeTimeDay" + nightNr).hide();
+	$($parentDiv).find("#errorUpTimeDay" + nightNr).hide();
+
 }
 
 function calculateTotalBedTime(bedTime, upTime) {
@@ -74,6 +74,11 @@ function calculateTimeDiffMin(time1, time2) {
 	var totalDiffMin;
 	var totalDiffHours;
 	var totalDiffTime;
+
+	// Daniels anteckning
+	// Bryta ut till funktioner?
+
+	// var totalDiffHours = getTotalDiffHours(time1Hours, time2Hours);
 
 	if (time1Hours < time2Hours) {
 		totalDiffHours = time2Hours - time1Hours;
@@ -253,12 +258,18 @@ function messageOutput2() {
 	});
 }
 
+function messageOutput3() {
+	$(".dialog3").dialog({
+		draggable: false
+	});
+}
+
 function verifyFirstInput() {
 	var $target = $(event.target); //html elementet input lådan
-	var night_no = $target.data('night-no'); //gets the nightNr
-	var $parent_div = $target.closest('.sleep-diary');
-	var firstInput = get_night_element($parent_div, 'bedTimeDay', night_no).val();
-	var secondInput = get_night_element($parent_div, 'sleepTimeDay', night_no);
+	var nightNr = $target.data('night-no'); //gets the nightNr
+	var $parentDiv = $target.closest('.sleep-diary');
+	var firstInput = get_night_element($parentDiv, 'bedTimeDay', nightNr).val();
+	var secondInput = get_night_element($parentDiv, 'sleepTimeDay', nightNr);
 
 	if (firstInput == "") {
 		messageOutput();
@@ -269,10 +280,10 @@ function verifyFirstInput() {
 
 function verifySecondInput() {
 	var $target = $(event.target); //html elementet input lådan
-	var night_no = $target.data('night-no'); //gets the nightNr
-	var $parent_div = $target.closest('.sleep-diary');
-	var secondInput = get_night_element($parent_div, 'sleepTimeDay', night_no).val();
-	var thirdInput = get_night_element($parent_div, 'wakeTimeDay', night_no);
+	var nightNr = $target.data('night-no'); //gets the nightNr
+	var $parentDiv = $target.closest('.sleep-diary');
+	var secondInput = get_night_element($parentDiv, 'sleepTimeDay', nightNr).val();
+	var thirdInput = get_night_element($parentDiv, 'wakeTimeDay', nightNr);
 	if (secondInput == "") {
 		messageOutput();
 		$(thirdInput).val("");
@@ -280,10 +291,10 @@ function verifySecondInput() {
 }
 function verifyThirdInput() {
 	var $target = $(event.target); //html elementet input lådan
-	var night_no = $target.data('night-no'); //gets the nightNr
-	var $parent_div = $target.closest('.sleep-diary');
-	var thirdInput = get_night_element($parent_div, 'wakeTimeDay', night_no).val();
-	var lastInput = get_night_element($parent_div, 'upTimeDay', night_no);
+	var nightNr = $target.data('night-no'); //gets the nightNr
+	var $parentDiv = $target.closest('.sleep-diary');
+	var thirdInput = get_night_element($parentDiv, 'wakeTimeDay', nightNr).val();
+	var lastInput = get_night_element($parentDiv, 'upTimeDay', nightNr);
 	if (thirdInput == "") {
 		messageOutput();
 		$(lastInput).val("");
