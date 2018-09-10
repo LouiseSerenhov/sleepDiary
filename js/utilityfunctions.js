@@ -1,7 +1,7 @@
 //Utilityfunktioner!
 
 
-function get_night_element($parentDiv, class_name, nightNr) { //exempel div sleepdiary,bedTimeday, upTimeDay 
+function get_night_element($parentDiv, class_name, nightNr) { //exempel, div sleepdiary,bedTimeday, 1 
 	var search_str = '.' + class_name + '[data-night-no="' + nightNr + '"]';
 	console.log(search_str);
 	var $elements = $parentDiv.find(search_str); //hittar inputen och och lägger i en array
@@ -37,25 +37,24 @@ function showResults($parentDiv, nightNr, totalSleepTime, sleepEfficacy, totalBe
 function clearErrorMessages($parentDiv, nightNr) {
 	$($parentDiv).find("#errorTimeDay" + nightNr).hide();
 	$($parentDiv).find("#errorWakeTimeDay" + nightNr).hide();
-	$($parentDiv).find("#errorUpTimeDay" + nightNr).hide();
+	$($parentDiv).find("#errorleaveBedTimeDay" + nightNr).hide();
 
 }
 
-function calculateTotalBedTime(bedTime, upTime) {
-	if (!bedTime || !upTime) {
+function calculateTotalBedTime(bedTime, leaveBedTime) {
+	if (!bedTime || !leaveBedTime) {
 		return;
 	}
-	return calculateTimeDiff(bedTime, upTime);
+	return calculateTimeDiff(bedTime, leaveBedTime);
 }
 
-function calculateTotalSleepTimeMin(bedTime, upTime, sleepTime, wakeTime, wakeInMiddleOfNightMin) {
+function calculateTotalSleepTimeMin(bedTime, leaveBedTime, sleepTime, wakeTime, wakeInMiddleOfNightMin) {
 	console.log('Anropar calculateTotalSleepTimeMin');
 	console.log(bedTime);
-	console.log(upTime);
+	console.log(leaveBedTime);
 	console.log(sleepTime);
 	console.log(wakeTime);
-	//Något saknas för att räkna ut
-	if (!bedTime || !upTime || !sleepTime || !wakeTime) {
+	if (!bedTime || !leaveBedTime || !sleepTime || !wakeTime) {
 		return;
 	}
 	var totalSleepTimeMin = calculateTimeDiffMin(sleepTime, wakeTime);
@@ -227,7 +226,6 @@ function fixSyntaxMaxValue(maxMin, maxHours) {
 
 
 function getFunctionNameForSleepAtNight(night) {
-	console.log('Eventlistener grejjen anropas!');
 	switch (night) {
 		case 6:
 			return calculateNight(night + 1);
@@ -264,7 +262,13 @@ function messageOutput3() {
 	});
 }
 
-function verifyFirstInput() {
+function messageOutput4() {
+	$(".dialog4").dialog({
+		draggable: false
+	});
+}
+
+function checkIfBedTimeIsFilled() {
 	var $target = $(event.target); //html elementet input lådan
 	var nightNr = $target.data('night-no'); //gets the nightNr
 	var $parentDiv = $target.closest('.sleep-diary');
@@ -277,8 +281,7 @@ function verifyFirstInput() {
 	}
 }
 
-
-function verifySecondInput() {
+function checkIfSleepTimeIsFilled() {
 	var $target = $(event.target); //html elementet input lådan
 	var nightNr = $target.data('night-no'); //gets the nightNr
 	var $parentDiv = $target.closest('.sleep-diary');
@@ -289,12 +292,12 @@ function verifySecondInput() {
 		$(thirdInput).val("");
 	}
 }
-function verifyThirdInput() {
+function checkIfWakeTimeIsFilled() {
 	var $target = $(event.target); //html elementet input lådan
 	var nightNr = $target.data('night-no'); //gets the nightNr
 	var $parentDiv = $target.closest('.sleep-diary');
 	var thirdInput = get_night_element($parentDiv, 'wakeTimeDay', nightNr).val();
-	var lastInput = get_night_element($parentDiv, 'upTimeDay', nightNr);
+	var lastInput = get_night_element($parentDiv, 'leaveBedTimeDay', nightNr);
 	if (thirdInput == "") {
 		messageOutput();
 		$(lastInput).val("");

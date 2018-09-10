@@ -64,14 +64,14 @@ function calculateNight() {
 	var nightNr = $target.data('nightNo'); //gets the nightNr
 	var $parentDiv = $target.closest('.sleep-diary');
 	var bedTime = get_night_element($parentDiv, 'bedTimeDay', nightNr).val();
-	var upTime = get_night_element($parentDiv, 'upTimeDay', nightNr).val();
+	var leaveBedTime = get_night_element($parentDiv, 'leaveBedTimeDay', nightNr).val();
 	var sleepTime = get_night_element($parentDiv, 'sleepTimeDay', nightNr).val();
 	var wakeTime = get_night_element($parentDiv, 'wakeTimeDay', nightNr).val();
 	var $AwakeTimeAtNights = get_night_element($parentDiv, 'addInputContainer', nightNr).find('.AwakeAtNight');
 	awakeTimeAtNight = sumAwakeTimeAtNightNew($AwakeTimeAtNights);
-	var totalBedTime = calculateTotalBedTime(bedTime, upTime);
-	var totalBedTimeMin = calculateTimeDiffMin(bedTime, upTime);
-	var totalSleepTimeMin = calculateTotalSleepTimeMin(bedTime, upTime, sleepTime, wakeTime, awakeTimeAtNight);
+	var totalBedTime = calculateTotalBedTime(bedTime, leaveBedTime);
+	var totalBedTimeMin = calculateTimeDiffMin(bedTime, leaveBedTime);
+	var totalSleepTimeMin = calculateTotalSleepTimeMin(bedTime, leaveBedTime, sleepTime, wakeTime, awakeTimeAtNight);
 	var sleepEfficacy = Math.round((totalSleepTimeMin / totalBedTimeMin) * 100);
 	if (totalSleepTimeMin != undefined) {
 		if (totalSleepTimeMin === 0){
@@ -90,15 +90,14 @@ function calculateNight() {
 			sleepEfficacy,
 			totalBedTime
 		}
-		checkingValidation(night);
+		checkValidation(night);
 	}
 }
 
-// Daniels anteckning
-// Verb-namngivning, -> checkValidation
-function checkingValidation(night) {
 
-	// //maxValue på upTimeday
+function checkValidation(night) {
+
+	// //maxValue på leaveBedTimeday
 	// var bedTime = new Date();
 
 	// // Daniels anteckning
@@ -110,13 +109,13 @@ function checkingValidation(night) {
 	// // bedTime.setMinutes(minutes)
 	// // lägg till 23h timmar från tiden från "När gick du och la dig", om man kör 22 kmr aldrig fina felmedelandet upp
 	// bedTime.setHours(+hours + 23);
-	// // var maxMinForUpTime = bedTime.getMinutes();
-	// var maxHoursForUpTime = bedTime.getHours();
-	// var maxValueForUpTime = fixSyntaxMaxValue(maxMinForUpTime, maxHoursForUpTime);
-	// var minHoursForUpTime = separateHours(get_night_element(night.$parentDiv, 'wakeTimeDay', night.nightNr).val());
-	// // var minMinForUpTime = separateMin(get_night_element(night.$parentDiv, 'wakeTimeDay', night.nightNr).val());
-	// var minValueForUpTime = fixSyntaxMinValue(minMinForUpTime, minHoursForUpTime);
-	// get_night_element(night.$parentDiv, 'upTimeDay', night.nightNr).attr({ "min": minValueForUpTime, "max": maxValueForUpTime });
+	// // var maxMinForleaveBedTime = bedTime.getMinutes();
+	// var maxHoursForleaveBedTime = bedTime.getHours();
+	// var maxValueForleaveBedTime = fixSyntaxMaxValue(maxMinForleaveBedTime, maxHoursForleaveBedTime);
+	// var minHoursForleaveBedTime = separateHours(get_night_element(night.$parentDiv, 'wakeTimeDay', night.nightNr).val());
+	// // var minMinForleaveBedTime = separateMin(get_night_element(night.$parentDiv, 'wakeTimeDay', night.nightNr).val());
+	// var minValueForleaveBedTime = fixSyntaxMinValue(minMinForleaveBedTime, minHoursForleaveBedTime);
+	// get_night_element(night.$parentDiv, 'leaveBedTimeDay', night.nightNr).attr({ "min": minValueForleaveBedTime, "max": maxValueForleaveBedTime });
 
 	// // maxValue på wakeTimeDay
 	// var minHoursForWakeTime = separateHours(get_night_element(night.$parentDiv, 'sleepTimeDay', night.nightNr).val());
@@ -139,10 +138,10 @@ function checkingValidation(night) {
 	// get_night_element(night.$parentDiv, 'wakeTimeDay', night.nightNr).attr({ "min": minValueForWakeTime, "max": maxValueForWakeTime });
 
 	if (night.totalBedTimeMin > 1320) {
-		$(night.$parentDiv).find("#errorUpTimeDay" + night.nightNr).show();
+		messageOutput4();
 		clearOutputField(night.$parentDiv, night.nightNr);
 	} else if (night.totalSleepTimeMin > 1320) {
-		$(night.$parentDiv).find("#errorWakeTimeDay" + night.nightNr).show();
+		messageOutput4();
 		clearOutputField($parentDiv, nightNr);
 	} else if (night.totalBedTimeMin < night.totalSleepTimeMin) {
 		messageOutput2();

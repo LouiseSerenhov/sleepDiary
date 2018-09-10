@@ -149,8 +149,12 @@
 
     <div class="sleep-diary">
         <div class="dialog" title="Hej!" style="display: none">Börja fylla i formuläret ovanifrån tack! </div>
-        <div class="dialog2" title="Hej!" style="display: none">Du försöker skriva att du gått upp innan du vaknat, ändra så det blir korrekt tack! </div>
-        <div class="dialog3" title="Hej!" style="display: none">Dubbelkolla att du fyllt i rätt. Det vanligaste felet är att du fyller i att du gått upp innan du vaknat, att du vaknat innan du somnat eller att du somnat innan du gått och lagt dig. Ändra så det blir korrekt tack! </div>
+        <div class="dialog2" title="Hej! dialog2" style="display: none">Det verkar som att du fyllt i något fel. Dubbelkolla att du gjort allt rätt. Det vanligaste felet är att du fyller i att du gått upp innan du vaknat, att du vaknat innan du somnat eller att du somnat innan du gått och lagt dig. Ändra så det blir korrekt tack! </div>
+        <div class="dialog4" title="Hej! dialog4" style="display: none"> Du försöker skriva att du varit i sängen mer än 22 timmar eller att du stigit upp innan du vaknat. Dubbelkolla att det stämmer! </div>
+
+
+       
+
 
         <div class="row">
             <div class="container-fluid">
@@ -242,7 +246,7 @@
                                     <td>
                                         <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm sleepTimeDay" data-night-no="1"
                                             name="sleepTimeDay1" onchange="calculateNight()" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 58'
-                                            onkeydown="verifyFirstInput()" tabindex="6">
+                                            onkeydown="checkIfBedTimeIsFilled()" tabindex="6">
                                     </td>
 
                                 </tr>
@@ -292,7 +296,7 @@
 
                                         <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm wakeTimeDay" data-night-no="1"
                                             name="wakeTimeDay1" tabindex="8" onchange="calculateNight()" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 58'
-                                            onkeydown="verifySecondInput()">
+                                            onkeydown="checkIfSleepTimeIsFilled()">
                                         <div id="errorWakeTimeDay1" class="invalid-feedback errorMessage"> <!-- Döp om till wakeUpTime-->
                                             Du försöker skriva att du sovit mer än 22 timmar, att du stigit upp innan du vaknat eller att du vaknat innan du somnat.
                                             Dubbelkolla att det stämmer!
@@ -304,15 +308,15 @@
                                 <tr>
                                     <th scope="row">När steg du upp på morgonen?</th>
                                     <td>
-                                        <input type="text" class="form-control form-control-sm example" id="upTimeExample" name="upTimeExample" value="07:00" disabled>
+                                        <input type="text" class="form-control form-control-sm example" id="leaveBedTimeExample" name="leaveBedTimeExample" value="07:00" disabled>
 
                                     </td>
                                     <td>
-                                        <!--upTimeDay1 kanske ska döpas om till leaveBedTime-->
-                                        <input type="time" pattern="^([01]\d|2[0-3]):?([0-5]\d)$" class="form-control form-control-sm upTimeDay" data-night-no="1"
-                                            name="upTimeDay1" tabindex="9" onchange="calculateNight()" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 58'
-                                            onkeydown="verifyThirdInput()"> <!--Döp om till verifyWakeUpTime ish-->
-                                        <div id="errorUpTimeDay1" class="invalid-feedback errorMessage">
+                                        <!--leaveBedTimeDay1 kanske ska döpas om till leaveBedTime-->
+                                        <input type="time" pattern="^([01]\d|2[0-3]):?([0-5]\d)$" class="form-control form-control-sm leaveBedTimeDay" data-night-no="1"
+                                            name="leaveBedTimeDay1" tabindex="9" onchange="calculateNight()" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 58'
+                                            onkeydown="checkIfWakeTimeIsFilled()"> <!--Döp om till verifyWakeleaveBedTime ish-->
+                                        <div id="errorleaveBedTimeDay1" class="invalid-feedback errorMessage">
                                             Du försöker skriva att du varit i sängen mer än 22 timmar eller att du stigit upp innan du vaknat. Dubbelkolla att det stämmer!
                                         </div>
                                     </td>
@@ -452,7 +456,7 @@
                                     <td style="padding-bottom: 15px;">
                                         <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm sleepTimeDay" data-night-no="2"
                                             name="sleepTimeDay2" tabindex="16" onchange="calculateNight()" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 58'
-                                            onkeydown="verifyFirstInput()">
+                                            onkeydown="checkIfBedTimeIsFilled()">
                                     </td>
                                 </tr>
                                 <tr class="awakeTimeAtNight" id="awakeTimeAtNight" name="awakeTimeAtNight">
@@ -497,7 +501,7 @@
                                     <td style="padding-bottom: 15px;">
                                         <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm wakeTimeDay iePadding3"
                                             data-night-no="2" name="wakeTimeDay2" tabindex="18" onchange="calculateNight()" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 58'
-                                            onkeydown="verifySecondInput()">
+                                            onkeydown="checkIfSleepTimeIsFilled()">
                                         <div id="errorWakeTimeDay2" class="invalid-feedback errorMessage">
                                             Du försöker skriva att du sovit mer än 22 timmar, att du stigit upp innan du vaknat eller att du vaknat innan du somnat.
                                             Dubbelkolla att det stämmer!
@@ -507,14 +511,14 @@
                                 <tr>
                                     <th scope="row" class="hideOnComputer">När steg du upp på morgonen?</th>
                                     <td class="hideOnComputer">
-                                        <input type="text" class="form-control form-control-sm example" id="upTimeExample" name="upTimeExample" value="07:00" disabled>
+                                        <input type="text" class="form-control form-control-sm example" id="leaveBedTimeExample" name="leaveBedTimeExample" value="07:00" disabled>
 
                                     </td>
                                     <td style="padding-bottom: 15px;">
-                                        <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm upTimeDay iePadding4"
-                                            data-night-no="2" name="upTimeDay2" tabindex="19" onchange="calculateNight()" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 58'
-                                            onkeydown="verifyThirdInput()">
-                                        <div id="errorUpTimeDay2" class="invalid-feedback errorMessage">
+                                        <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm leaveBedTimeDay iePadding4"
+                                            data-night-no="2" name="leaveBedTimeDay2" tabindex="19" onchange="calculateNight()" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 58'
+                                            onkeydown="checkIfWakeTimeIsFilled()">
+                                        <div id="errorleaveBedTimeDay2" class="invalid-feedback errorMessage">
                                             Du försöker skriva att du varit i sängen mer än 22 timmar eller att du stigit upp innan du vaknat. Dubbelkolla att det stämmer!
                                         </div>
                                     </td>
@@ -662,7 +666,7 @@
                                     <td style="padding-bottom: 15px;">
                                         <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm sleepTimeDay" data-night-no="3"
                                             name="sleepTimeDay3" tabindex="26" onchange="calculateNight()" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 58'
-                                            onkeydown="verifyFirstInput()">
+                                            onkeydown="checkIfBedTimeIsFilled()">
                                     </td>
 
                                 </tr>
@@ -711,7 +715,7 @@
                                     <td style="padding-bottom: 15px;">
                                         <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm wakeTimeDay iePadding3"
                                             data-night-no="3" name="wakeTimeDay3" tabindex="28" onchange="calculateNight()" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 58'
-                                            onkeydown="verifySecondInput()">
+                                            onkeydown="checkIfSleepTimeIsFilled()">
                                         <div id="errorWakeTimeDay3" class="invalid-feedback errorMessage">
                                             Du försöker skriva att du sovit mer än 22 timmar, att du stigit upp innan du vaknat eller att du vaknat innan du somnat.
                                             Dubbelkolla att det stämmer!
@@ -721,14 +725,14 @@
                                 <tr>
                                     <th scope="row" class="hideOnComputer">När steg du upp på morgonen?</th>
                                     <td class="hideOnComputer">
-                                        <input type="text" class="form-control form-control-sm example" id="upTimeExample" name="upTimeExample" value="07:00" disabled>
+                                        <input type="text" class="form-control form-control-sm example" id="leaveBedTimeExample" name="leaveBedTimeExample" value="07:00" disabled>
                                     </td>
                                     <td style="padding-bottom: 15px;">
-                                        <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm upTimeDay iePadding4"
-                                            data-night-no="3" name="upTimeDay3" tabindex="29" onchange="calculateNight()" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 58'
-                                            onkeydown="verifyThirdInput()">
+                                        <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm leaveBedTimeDay iePadding4"
+                                            data-night-no="3" name="leaveBedTimeDay3" tabindex="29" onchange="calculateNight()" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 58'
+                                            onkeydown="checkIfWakeTimeIsFilled()">
 
-                                        <div id="errorUpTimeDay3" class="invalid-feedback errorMessage">
+                                        <div id="errorleaveBedTimeDay3" class="invalid-feedback errorMessage">
                                             Du försöker skriva att du varit i sängen mer än 22 timmar eller att du stigit upp innan du vaknat. Dubbelkolla att det stämmer!
                                         </div>
                                     </td>
@@ -878,7 +882,7 @@
                                     <td style="padding-bottom: 15px;">
                                         <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm sleepTimeDay" data-night-no="4"
                                             name="sleepTimeDay4" tabindex="36" onchange="calculateNight()" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 58'
-                                            onkeydown="verifyFirstInput()">
+                                            onkeydown="checkIfBedTimeIsFilled()">
                                     </td>
 
                                 </tr>
@@ -927,7 +931,7 @@
                                     <td style="padding-bottom: 15px;">
                                         <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm wakeTimeDay iePadding3"
                                             data-night-no="4" name="wakeTimeDay4" tabindex="38" onchange="calculateNight()" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 58'
-                                            onkeydown="verifySecondInput()">
+                                            onkeydown="checkIfSleepTimeIsFilled()">
                                         <div id="errorWakeTimeDay4" class="invalid-feedback errorMessage">
                                             Du försöker skriva att du sovit mer än 22 timmar, att du stigit upp innan du vaknat eller att du vaknat innan du somnat.
                                             Dubbelkolla att det stämmer!
@@ -937,14 +941,14 @@
                                 <tr>
                                     <th scope="row" class="hideOnComputer">När steg du upp på morgonen?</th>
                                     <td class="hideOnComputer">
-                                        <input type="text" class="form-control form-control-sm example" id="upTimeExample" name="upTimeExample" value="07:00" disabled>
+                                        <input type="text" class="form-control form-control-sm example" id="leaveBedTimeExample" name="leaveBedTimeExample" value="07:00" disabled>
                                     </td>
                                     <td style="padding-bottom: 15px;">
-                                        <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm upTimeDay iePadding4"
-                                            data-night-no="4" name="upTimeDay4" tabindex="39" onchange="calculateNight()" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 58'
-                                            onkeydown="verifyThirdInput()">
+                                        <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm leaveBedTimeDay iePadding4"
+                                            data-night-no="4" name="leaveBedTimeDay4" tabindex="39" onchange="calculateNight()" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 58'
+                                            onkeydown="checkIfWakeTimeIsFilled()">
 
-                                        <div id="errorUpTimeDay4" class="invalid-feedback errorMessage">
+                                        <div id="errorleaveBedTimeDay4" class="invalid-feedback errorMessage">
                                             Du försöker skriva att du varit i sängen mer än 22 timmar eller att du stigit upp innan du vaknat. Dubbelkolla att det stämmer!
                                         </div>
                                     </td>
@@ -1093,7 +1097,7 @@
                                     <td style="padding-bottom: 15px;">
                                         <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm sleepTimeDay" data-night-no="5"
                                             name="sleepTimeDay4" tabindex="46" onchange="calculateNight()" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 58'
-                                            onkeydown="verifyFirstInput()">
+                                            onkeydown="checkIfBedTimeIsFilled()">
                                     </td>
 
                                 </tr>
@@ -1142,7 +1146,7 @@
                                     <td style="padding-bottom: 15px;">
                                         <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm wakeTimeDay iePadding3"
                                             data-night-no="5" name="wakeTimeDay5" tabindex="38" onchange="calculateNight()" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 58'
-                                            onkeydown="verifySecondInput()">
+                                            onkeydown="checkIfSleepTimeIsFilled()">
                                         <div id="errorWakeTimeDay5" class="invalid-feedback errorMessage">
                                             Du försöker skriva att du sovit mer än 22 timmar, att du stigit upp innan du vaknat eller att du vaknat innan du somnat.
                                             Dubbelkolla att det stämmer!
@@ -1152,14 +1156,14 @@
                                 <tr>
                                     <th scope="row" class="hideOnComputer">När steg du upp på morgonen?</th>
                                     <td class="hideOnComputer">
-                                        <input type="text" class="form-control form-control-sm example" id="upTimeExample" name="upTimeExample" value="07:00" disabled>
+                                        <input type="text" class="form-control form-control-sm example" id="leaveBedTimeExample" name="leaveBedTimeExample" value="07:00" disabled>
                                     </td>
                                     <td style="padding-bottom: 15px;">
-                                        <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm upTimeDay iePadding4"
-                                            data-night-no="5" name="upTimeDay5" tabindex="49" onchange="calculateNight()" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 58'
-                                            onkeydown="verifyThirdInput()">
+                                        <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm leaveBedTimeDay iePadding4"
+                                            data-night-no="5" name="leaveBedTimeDay5" tabindex="49" onchange="calculateNight()" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 58'
+                                            onkeydown="checkIfWakeTimeIsFilled()">
 
-                                        <div id="errorUpTimeDay5" class="invalid-feedback errorMessage">
+                                        <div id="errorleaveBedTimeDay5" class="invalid-feedback errorMessage">
                                             Du försöker skriva att du varit i sängen mer än 22 timmar eller att du stigit upp innan du vaknat. Dubbelkolla att det stämmer!
                                         </div>
                                     </td>
@@ -1309,7 +1313,7 @@
                                     <td style="padding-bottom: 15px;">
                                         <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm sleepTimeDay" data-night-no="6"
                                             name="sleepTimeDay4" tabindex="56" onchange="calculateNight()" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 58'
-                                            onkeydown="verifyFirstInput()">
+                                            onkeydown="checkIfBedTimeIsFilled()">
                                     </td>
 
                                 </tr>
@@ -1358,7 +1362,7 @@
                                     <td style="padding-bottom: 15px;">
                                         <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm wakeTimeDay iePadding3"
                                             data-night-no="6" name="wakeTimeDay5" tabindex="58" onchange="calculateNight()" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 58'
-                                            onkeydown="verifySecondInput()">
+                                            onkeydown="checkIfSleepTimeIsFilled()">
                                         <div id="errorWakeTimeDay5" class="invalid-feedback errorMessage">
                                             Du försöker skriva att du sovit mer än 22 timmar, att du stigit upp innan du vaknat eller att du vaknat innan du somnat.
                                             Dubbelkolla att det stämmer!
@@ -1368,14 +1372,14 @@
                                 <tr>
                                     <th scope="row" class="hideOnComputer">När steg du upp på morgonen?</th>
                                     <td class="hideOnComputer">
-                                        <input type="text" class="form-control form-control-sm example" id="upTimeExample" name="upTimeExample" value="07:00" disabled>
+                                        <input type="text" class="form-control form-control-sm example" id="leaveBedTimeExample" name="leaveBedTimeExample" value="07:00" disabled>
                                     </td>
                                     <td style="padding-bottom: 15px;">
-                                        <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm upTimeDay iePadding4"
-                                            data-night-no="6" name="upTimeDay5" tabindex="59" onchange="calculateNight()" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 58'
-                                            onkeydown="verifyThirdInput()">
+                                        <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm leaveBedTimeDay iePadding4"
+                                            data-night-no="6" name="leaveBedTimeDay5" tabindex="59" onchange="calculateNight()" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 58'
+                                            onkeydown="checkIfWakeTimeIsFilled()">
 
-                                        <div id="errorUpTimeDay6" class="invalid-feedback errorMessage">
+                                        <div id="errorleaveBedTimeDay6" class="invalid-feedback errorMessage">
                                             Du försöker skriva att du varit i sängen mer än 22 timmar eller att du stigit upp innan du vaknat. Dubbelkolla att det stämmer!
                                         </div>
                                     </td>
@@ -1525,7 +1529,7 @@
                                     <td style="padding-bottom: 15px;">
                                         <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm sleepTimeDay" data-night-no="7"
                                             name="sleepTimeDay4" tabindex="66" onchange="calculateNight()" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 58'
-                                            onkeydown="verifyFirstInput()">
+                                            onkeydown="checkIfBedTimeIsFilled()">
                                     </td>
 
                                 </tr>
@@ -1574,7 +1578,7 @@
                                     <td style="padding-bottom: 15px;">
                                         <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm wakeTimeDay iePadding3"
                                             data-night-no="7" name="wakeTimeDay5" tabindex="68" onchange="calculateNight()" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 58'
-                                            onkeydown="verifySecondInput()">
+                                            onkeydown="checkIfSleepTimeIsFilled()">
                                         <div id="errorWakeTimeDay5" class="invalid-feedback errorMessage">
                                             Du försöker skriva att du sovit mer än 22 timmar, att du stigit upp innan du vaknat eller att du vaknat innan du somnat.
                                             Dubbelkolla att det stämmer!
@@ -1584,14 +1588,14 @@
                                 <tr>
                                     <th scope="row" class="hideOnComputer">När steg du upp på morgonen?</th>
                                     <td class="hideOnComputer">
-                                        <input type="text" class="form-control form-control-sm example" id="upTimeExample" name="upTimeExample" value="07:00" disabled>
+                                        <input type="text" class="form-control form-control-sm example" id="leaveBedTimeExample" name="leaveBedTimeExample" value="07:00" disabled>
                                     </td>
                                     <td style="padding-bottom: 15px;">
-                                        <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm upTimeDay iePadding4"
-                                            data-night-no="7" name="upTimeDay5" tabindex="69" onchange="calculateNight()" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 58'
-                                            onkeydown="verifyThirdInput()">
+                                        <input type="time" pattern="^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$" class="form-control form-control-sm leaveBedTimeDay iePadding4"
+                                            data-night-no="7" name="leaveBedTimeDay5" tabindex="69" onchange="calculateNight()" onkeypress='return event.charCode >= 48 && event.charCode <= 57 || event.charCode == 58'
+                                            onkeydown="checkIfWakeTimeIsFilled()">
 
-                                        <div id="errorUpTimeDay6" class="invalid-feedback errorMessage">
+                                        <div id="errorleaveBedTimeDay6" class="invalid-feedback errorMessage">
                                             Du försöker skriva att du varit i sängen mer än 22 timmar eller att du stigit upp innan du vaknat. Dubbelkolla att det stämmer!
                                         </div>
                                     </td>
