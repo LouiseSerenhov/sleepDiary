@@ -138,19 +138,23 @@ function checkValidation(night) {
 	// get_night_element(night.$parentDiv, 'wakeTimeDay', night.nightNr).attr({ "min": minValueForWakeTime, "max": maxValueForWakeTime });
 
 	if (night.totalBedTimeMin > 1320) {
-		messageOutput4();
+		// var input = get_night_element($parentDiv, 'sleepTimeDay', nightNr);
+		$('#error3').modal("show");
+		// $("#error3").on("hidden.bs.modal", function () {
+		// 	$(input).val("");
+		// });
 		clearOutputField(night.$parentDiv, night.nightNr);
 	} else if (night.totalSleepTimeMin > 1320) {
-		messageOutput4();
+		$('#error3').modal("show");
 		clearOutputField($parentDiv, nightNr);
 	} else if (night.totalBedTimeMin < night.totalSleepTimeMin) {
-		messageOutput2();
+		$('#error2').modal("show");
 		clearOutputField(night.$parentDiv, night.nightNr);
 	} else if (night.totalBedTimeMin < 0) {
-		messageOutput3();
+		$('#error2').modal("show");
 		clearOutputField(night.$parentDiv, night.nightNr);
 	} else if (night.totalSleepTimeMin < 0) {
-		messageOutput3();
+		$('#error2').modal("show");
 		clearOutputField(night.$parentDiv, night.nightNr);
 	} else { // input is fine 
 		clearErrorMessages(night.$parentDiv, night.nightNr);

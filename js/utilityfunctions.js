@@ -244,40 +244,18 @@ function getFunctionNameForSleepAtNight(night) {
 	}
 }
 
-function messageOutput() {
-	$(".dialog").dialog({
-		draggable: false
-	});
-}
-
-function messageOutput2() {
-	$(".dialog2").dialog({
-		draggable: false
-	});
-}
-
-function messageOutput3() {
-	$(".dialog3").dialog({
-		draggable: false
-	});
-}
-
-function messageOutput4() {
-	$(".dialog4").dialog({
-		draggable: false
-	});
-}
-
 function checkIfBedTimeIsFilled() {
 	var $target = $(event.target); //html elementet input lådan
 	var nightNr = $target.data('night-no'); //gets the nightNr
 	var $parentDiv = $target.closest('.sleep-diary');
 	var firstInput = get_night_element($parentDiv, 'bedTimeDay', nightNr).val();
 	var secondInput = get_night_element($parentDiv, 'sleepTimeDay', nightNr);
-
 	if (firstInput == "") {
-		messageOutput();
-		$(secondInput).val("");
+		$('#error1').modal("show");
+		$("#error1").on("hidden.bs.modal", function () {
+			$(secondInput).val("");
+		});
+		
 	}
 }
 
@@ -288,8 +266,10 @@ function checkIfSleepTimeIsFilled() {
 	var secondInput = get_night_element($parentDiv, 'sleepTimeDay', nightNr).val();
 	var thirdInput = get_night_element($parentDiv, 'wakeTimeDay', nightNr);
 	if (secondInput == "") {
-		messageOutput();
-		$(thirdInput).val("");
+		$('#error1').modal("show");
+		$("#error1").on("hidden.bs.modal", function () {
+			$(thirdInput).val("");
+		});
 	}
 }
 function checkIfWakeTimeIsFilled() {
@@ -299,7 +279,9 @@ function checkIfWakeTimeIsFilled() {
 	var thirdInput = get_night_element($parentDiv, 'wakeTimeDay', nightNr).val();
 	var lastInput = get_night_element($parentDiv, 'leaveBedTimeDay', nightNr);
 	if (thirdInput == "") {
-		messageOutput();
-		$(lastInput).val("");
+		$('#error1').modal("show");
+		$("#error1").on("hidden.bs.modal", function () {
+			$(lastInput).val("");
+		});
 	}
 }
